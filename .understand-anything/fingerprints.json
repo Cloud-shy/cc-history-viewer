@@ -1,0 +1,2177 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "7cef6c92cd8d8ba866cffaf0c0e8f4d92c01a0b6",
+  "generatedAt": "2026-05-26T23:30:35.716Z",
+  "files": {
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "6a51e388d2c09fb52afc4bd400b0763c5a2e6382d4dc865b94af6bca5af5d628",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": false
+    },
+    "client/index.html": {
+      "filePath": "client/index.html",
+      "contentHash": "8c4108a25def5bb9b8bd60da48758607adf7c4eab225c6024bf5c56ff3d9e672",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "client/package.json": {
+      "filePath": "client/package.json",
+      "contentHash": "0e90795dab184db02e644daa8559c04ac1da12cd0076d15ad9762711f1931b81",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "client/postcss.config.js": {
+      "filePath": "client/postcss.config.js",
+      "contentHash": "e32657baf631d7c5f4dc67b4b2ee0ec8e7d5b3c41860e09cddce7c0377cd80bc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/api/client.ts": {
+      "filePath": "client/src/api/client.ts",
+      "contentHash": "dd4cc90ae3027a75e7e8af16d4437b970a8db9f50bb668e930c197bf841972ec",
+      "functions": [
+        {
+          "name": "fetchJson",
+          "params": [
+            "path",
+            "init"
+          ],
+          "returnType": "Promise<T>",
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "api"
+      ],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/App.tsx": {
+      "filePath": "client/src/App.tsx",
+      "contentHash": "9495eb60255a2de8bc2818ae5d668da614d6da352db5c8318ed14c53174a2483",
+      "functions": [
+        {
+          "name": "App",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "./context/AppContext",
+          "specifiers": [
+            "AppProvider"
+          ]
+        },
+        {
+          "source": "./components/layout/Shell",
+          "specifiers": [
+            "Shell"
+          ]
+        }
+      ],
+      "exports": [
+        "App"
+      ],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/AssistantMessage.tsx": {
+      "filePath": "client/src/components/chat/AssistantMessage.tsx",
+      "contentHash": "2242d07a11c59a42b2b25a7280b8aa728db78f77929e01631fdcdc7dbea1c845",
+      "functions": [
+        {
+          "name": "extractText",
+          "params": [
+            "blocks"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "AssistantMessage",
+          "params": [
+            "{ event }"
+          ],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "BlockRenderer",
+          "params": [
+            "{ block, index }"
+          ],
+          "exported": false,
+          "lineCount": 36
+        },
+        {
+          "name": "truncate",
+          "params": [
+            "s",
+            "max"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../types",
+          "specifiers": [
+            "NormalizedEvent",
+            "ContentBlock"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../utils/dateFormat",
+          "specifiers": [
+            "formatDate"
+          ]
+        },
+        {
+          "source": "./ThinkingBlock",
+          "specifiers": [
+            "ThinkingBlock"
+          ]
+        },
+        {
+          "source": "./ToolCallBlock",
+          "specifiers": [
+            "ToolCallBlock"
+          ]
+        },
+        {
+          "source": "./TextBlock",
+          "specifiers": [
+            "TextBlock"
+          ]
+        },
+        {
+          "source": "../shared/CopyButton",
+          "specifiers": [
+            "CopyButton"
+          ]
+        }
+      ],
+      "exports": [
+        "AssistantMessage"
+      ],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/ChatWindow.tsx": {
+      "filePath": "client/src/components/chat/ChatWindow.tsx",
+      "contentHash": "d7362abe0973a7cfaa1a72d7164f917510c29aeabc97ec43b9155cd675f2d033",
+      "functions": [
+        {
+          "name": "ChatWindow",
+          "params": [
+            "{ projectId, sessionId }"
+          ],
+          "exported": true,
+          "lineCount": 120
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useState",
+            "useRef",
+            "useMemo"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../api/client",
+          "specifiers": [
+            "api"
+          ]
+        },
+        {
+          "source": "./MessageBubble",
+          "specifiers": [
+            "MessageBubble"
+          ]
+        },
+        {
+          "source": "../shared/FilterBar",
+          "specifiers": [
+            "FilterBar"
+          ]
+        },
+        {
+          "source": "../../utils/exportMarkdown",
+          "specifiers": [
+            "downloadMarkdown"
+          ]
+        },
+        {
+          "source": "../../types",
+          "specifiers": [
+            "NormalizedEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "ChatWindow"
+      ],
+      "totalLines": 134,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/MessageBubble.tsx": {
+      "filePath": "client/src/components/chat/MessageBubble.tsx",
+      "contentHash": "908ff95ee67f12d2fe3f8c4f262f1172b6e882918787a9c32d819499a4f82a7e",
+      "functions": [
+        {
+          "name": "MessageBubble",
+          "params": [
+            "{ event }"
+          ],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../types",
+          "specifiers": [
+            "NormalizedEvent"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "./UserMessage",
+          "specifiers": [
+            "UserMessage"
+          ]
+        },
+        {
+          "source": "./AssistantMessage",
+          "specifiers": [
+            "AssistantMessage"
+          ]
+        },
+        {
+          "source": "./SystemEvent",
+          "specifiers": [
+            "SystemEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "MessageBubble"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/SystemEvent.tsx": {
+      "filePath": "client/src/components/chat/SystemEvent.tsx",
+      "contentHash": "a2810b4fbb04918445c22da6d0cf10535cd0569631d27fb5742afec9a9d3aa6b",
+      "functions": [
+        {
+          "name": "SystemEvent",
+          "params": [
+            "{ event }"
+          ],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../types",
+          "specifiers": [
+            "NormalizedEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "SystemEvent"
+      ],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/TextBlock.tsx": {
+      "filePath": "client/src/components/chat/TextBlock.tsx",
+      "contentHash": "e467c757a403b4c6333f378c3708f405b02fe3f408cbb28c5a5f74b30f0180f3",
+      "functions": [
+        {
+          "name": "TextBlock",
+          "params": [
+            "{ content }"
+          ],
+          "exported": true,
+          "lineCount": 73
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react-markdown",
+          "specifiers": [
+            "ReactMarkdown"
+          ]
+        },
+        {
+          "source": "remark-gfm",
+          "specifiers": [
+            "remarkGfm"
+          ]
+        },
+        {
+          "source": "react-syntax-highlighter",
+          "specifiers": [
+            "SyntaxHighlighter"
+          ]
+        },
+        {
+          "source": "react-syntax-highlighter/dist/esm/styles/prism",
+          "specifiers": [
+            "oneDark"
+          ]
+        }
+      ],
+      "exports": [
+        "TextBlock"
+      ],
+      "totalLines": 83,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/ThinkingBlock.tsx": {
+      "filePath": "client/src/components/chat/ThinkingBlock.tsx",
+      "contentHash": "55ba91905f2cf205a418a960ce38b682fb14c8368cd2a69eca247c1911375ae6",
+      "functions": [
+        {
+          "name": "ThinkingBlock",
+          "params": [
+            "{ block, index }"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../types",
+          "specifiers": [
+            "ContentBlock"
+          ]
+        }
+      ],
+      "exports": [
+        "ThinkingBlock"
+      ],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/ToolCallBlock.tsx": {
+      "filePath": "client/src/components/chat/ToolCallBlock.tsx",
+      "contentHash": "66f7eaec3db0a9c6ef2ca749c8fd026720c812f108265bac43b6127735363645",
+      "functions": [
+        {
+          "name": "ToolCallBlock",
+          "params": [
+            "{ block }"
+          ],
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "getToolSummary",
+          "params": [
+            "name",
+            "input"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../types",
+          "specifiers": [
+            "ContentBlock"
+          ]
+        }
+      ],
+      "exports": [
+        "ToolCallBlock"
+      ],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/chat/UserMessage.tsx": {
+      "filePath": "client/src/components/chat/UserMessage.tsx",
+      "contentHash": "de412252cfb48b6780c53472998bd69c148a7d0e1c01f99308e609ceeaa27406",
+      "functions": [
+        {
+          "name": "UserMessage",
+          "params": [
+            "{ event }"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../types",
+          "specifiers": [
+            "NormalizedEvent"
+          ]
+        },
+        {
+          "source": "../../utils/dateFormat",
+          "specifiers": [
+            "formatDate"
+          ]
+        },
+        {
+          "source": "../shared/CopyButton",
+          "specifiers": [
+            "CopyButton"
+          ]
+        }
+      ],
+      "exports": [
+        "UserMessage"
+      ],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/layout/MainPanel.tsx": {
+      "filePath": "client/src/components/layout/MainPanel.tsx",
+      "contentHash": "7b8fee71e7558664228ccb3e5ee61b182597fc9ae30ee20041fae9c51113caed",
+      "functions": [
+        {
+          "name": "MainPanel",
+          "params": [],
+          "exported": true,
+          "lineCount": 42
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../chat/ChatWindow",
+          "specifiers": [
+            "ChatWindow"
+          ]
+        }
+      ],
+      "exports": [
+        "MainPanel"
+      ],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/layout/Shell.tsx": {
+      "filePath": "client/src/components/layout/Shell.tsx",
+      "contentHash": "50b537a2428e2c4be6a6a5d6d56b6230c5713389966d03a669115c1cdd0a7e03",
+      "functions": [
+        {
+          "name": "Shell",
+          "params": [],
+          "exported": true,
+          "lineCount": 80
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useCallback"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../api/client",
+          "specifiers": [
+            "api"
+          ]
+        },
+        {
+          "source": "./Sidebar",
+          "specifiers": [
+            "Sidebar"
+          ]
+        },
+        {
+          "source": "./MainPanel",
+          "specifiers": [
+            "MainPanel"
+          ]
+        },
+        {
+          "source": "../shared/SettingsPanel",
+          "specifiers": [
+            "SettingsPanel"
+          ]
+        },
+        {
+          "source": "../shared/Toast",
+          "specifiers": [
+            "ToastContainer"
+          ]
+        }
+      ],
+      "exports": [
+        "Shell"
+      ],
+      "totalLines": 89,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/layout/Sidebar.tsx": {
+      "filePath": "client/src/components/layout/Sidebar.tsx",
+      "contentHash": "ed3d5a05e43f7b7bab43fae481eb57c65c45d4f66baf4f00a7c99300d8ffcf8b",
+      "functions": [
+        {
+          "name": "Sidebar",
+          "params": [],
+          "exported": true,
+          "lineCount": 251
+        },
+        {
+          "name": "groupByProject",
+          "params": [
+            "results",
+            "projects"
+          ],
+          "exported": false,
+          "lineCount": 15
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useCallback"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../api/client",
+          "specifiers": [
+            "api"
+          ]
+        },
+        {
+          "source": "../sidebar/SearchBar",
+          "specifiers": [
+            "SearchBar"
+          ]
+        },
+        {
+          "source": "../sidebar/SessionList",
+          "specifiers": [
+            "SessionList"
+          ]
+        },
+        {
+          "source": "../shared/ContextMenu",
+          "specifiers": [
+            "ContextMenu"
+          ]
+        }
+      ],
+      "exports": [
+        "Sidebar"
+      ],
+      "totalLines": 275,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/ContextMenu.tsx": {
+      "filePath": "client/src/components/shared/ContextMenu.tsx",
+      "contentHash": "60814fc1ebd69560258186b4c0ff2f6d60bd8c71f87e71a75bf4f7730c3b3527",
+      "functions": [
+        {
+          "name": "ContextMenu",
+          "params": [
+            "{ x, y, onClose, items }"
+          ],
+          "exported": true,
+          "lineCount": 61
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useRef"
+          ]
+        }
+      ],
+      "exports": [
+        "ContextMenu"
+      ],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/CopyButton.tsx": {
+      "filePath": "client/src/components/shared/CopyButton.tsx",
+      "contentHash": "f1c793746e3d7fce199938cafffc5bf4966fab926744a4452bb7e664bede7a06",
+      "functions": [
+        {
+          "name": "CopyButton",
+          "params": [
+            "{ text }"
+          ],
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useCallback"
+          ]
+        }
+      ],
+      "exports": [
+        "CopyButton"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/FilterBar.tsx": {
+      "filePath": "client/src/components/shared/FilterBar.tsx",
+      "contentHash": "e1dfe101090012086afa4417263e32a5e27e53c4f931f3455010f0ed996de02c",
+      "functions": [
+        {
+          "name": "FilterBar",
+          "params": [],
+          "exported": true,
+          "lineCount": 53
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../types",
+          "specifiers": [
+            "FilterState"
+          ]
+        }
+      ],
+      "exports": [
+        "FilterBar"
+      ],
+      "totalLines": 64,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/InlineEdit.tsx": {
+      "filePath": "client/src/components/shared/InlineEdit.tsx",
+      "contentHash": "16c0adc07b765a28a3c9bd49b4bcbd28d560a2eb16e25bd5bffff9fc62eab718",
+      "functions": [
+        {
+          "name": "InlineEdit",
+          "params": [
+            "{ value, onSave, className = '', placeholder = 'Untitled' }"
+          ],
+          "exported": true,
+          "lineCount": 61
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState",
+            "useRef",
+            "useEffect"
+          ]
+        }
+      ],
+      "exports": [
+        "InlineEdit"
+      ],
+      "totalLines": 71,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/SettingsPanel.tsx": {
+      "filePath": "client/src/components/shared/SettingsPanel.tsx",
+      "contentHash": "9246960159c9d28f5dd8ddc007c2112e18941118596f1e5b05b53ed5504c2e0b",
+      "functions": [
+        {
+          "name": "SettingsPanel",
+          "params": [],
+          "exported": true,
+          "lineCount": 199
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useState"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState",
+            "ThemeName",
+            "FontFamily",
+            "FontSize"
+          ]
+        }
+      ],
+      "exports": [
+        "SettingsPanel"
+      ],
+      "totalLines": 227,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/shared/Toast.tsx": {
+      "filePath": "client/src/components/shared/Toast.tsx",
+      "contentHash": "9ce429cbf32d5c3b84ac963144fb26806330127700a485e578c65c9489b7d6d7",
+      "functions": [
+        {
+          "name": "ToastContainer",
+          "params": [],
+          "exported": true,
+          "lineCount": 40
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        }
+      ],
+      "exports": [
+        "ToastContainer"
+      ],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/sidebar/SearchBar.tsx": {
+      "filePath": "client/src/components/sidebar/SearchBar.tsx",
+      "contentHash": "c65db227e327d48a9e08fb33d10d53bd5413a37c27902ff9b9c253be6de52241",
+      "functions": [
+        {
+          "name": "SearchBar",
+          "params": [],
+          "exported": true,
+          "lineCount": 54
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useRef",
+            "useEffect"
+          ]
+        },
+        {
+          "source": "../../context/AppContext",
+          "specifiers": [
+            "useAppState"
+          ]
+        },
+        {
+          "source": "../../api/client",
+          "specifiers": [
+            "api"
+          ]
+        }
+      ],
+      "exports": [
+        "SearchBar"
+      ],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/components/sidebar/SessionList.tsx": {
+      "filePath": "client/src/components/sidebar/SessionList.tsx",
+      "contentHash": "1c8cc39a84f95aaa09712f2355911f9ac59248a6af229867278f0e6c3e08850e",
+      "functions": [
+        {
+          "name": "SessionList",
+          "params": [
+            "{ groups, selectedSessionId, onSessionClick, onContextMenu }"
+          ],
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "SessionList"
+      ],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/context/AppContext.tsx": {
+      "filePath": "client/src/context/AppContext.tsx",
+      "contentHash": "56e6442309c75bc92272f24455cbc5c4546271c3b24c812db77a7a281292891f",
+      "functions": [
+        {
+          "name": "loadSettings",
+          "params": [],
+          "returnType": "SettingsState",
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "saveSettings",
+          "params": [
+            "s"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "reducer",
+          "params": [
+            "state",
+            "action"
+          ],
+          "returnType": "AppState",
+          "exported": false,
+          "lineCount": 84
+        },
+        {
+          "name": "AppProvider",
+          "params": [
+            "{ children }"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "useAppState",
+          "params": [],
+          "returnType": "AppContextValue",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "createContext",
+            "useContext",
+            "useReducer",
+            "useEffect",
+            "useCallback",
+            "Dispatch"
+          ]
+        },
+        {
+          "source": "../types",
+          "specifiers": [
+            "Project",
+            "Session",
+            "SearchResult",
+            "FilterState"
+          ]
+        },
+        {
+          "source": "../types",
+          "specifiers": [
+            "DEFAULT_FILTERS"
+          ]
+        }
+      ],
+      "exports": [
+        "AppProvider",
+        "useAppState"
+      ],
+      "totalLines": 228,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/index.css": {
+      "filePath": "client/src/index.css",
+      "contentHash": "6b3359c909119259ab2cfb974488347178afa0c9567cd129f0f0fbda0e19e509",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 685,
+      "hasStructuralAnalysis": false
+    },
+    "client/src/main.tsx": {
+      "filePath": "client/src/main.tsx",
+      "contentHash": "14a10dee4aaa2130d9f57c136db7f16f95f524d60d77146b17776e91c2ab626c",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "React"
+          ]
+        },
+        {
+          "source": "react-dom/client",
+          "specifiers": [
+            "ReactDOM"
+          ]
+        },
+        {
+          "source": "./App",
+          "specifiers": [
+            "App"
+          ]
+        },
+        {
+          "source": "./index.css",
+          "specifiers": []
+        }
+      ],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/types/index.ts": {
+      "filePath": "client/src/types/index.ts",
+      "contentHash": "078e5e764ed5735906045eb1c63128c687da2c1040065fed3476fc27bb6e33b8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "DEFAULT_FILTERS"
+      ],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/utils/dateFormat.ts": {
+      "filePath": "client/src/utils/dateFormat.ts",
+      "contentHash": "48320fde4ceb2fb7591aae3593b9916a3afdbee13244028b34c5ff1a3a938424",
+      "functions": [
+        {
+          "name": "formatDate",
+          "params": [
+            "isoString"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "formatFullDate",
+          "params": [
+            "isoString"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "formatDate",
+        "formatFullDate"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "client/src/utils/exportMarkdown.ts": {
+      "filePath": "client/src/utils/exportMarkdown.ts",
+      "contentHash": "fc4d8e8a3cf4b5ea0fb8e53770856bd7b5ccec2e30b37f5ce272b416028ea160",
+      "functions": [
+        {
+          "name": "formatMdDate",
+          "params": [
+            "ts"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "eventsToMarkdown",
+          "params": [
+            "events",
+            "title"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 62
+        },
+        {
+          "name": "downloadMarkdown",
+          "params": [
+            "events",
+            "filename"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "../types",
+          "specifiers": [
+            "NormalizedEvent"
+          ]
+        }
+      ],
+      "exports": [
+        "eventsToMarkdown",
+        "downloadMarkdown"
+      ],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "client/tailwind.config.ts": {
+      "filePath": "client/tailwind.config.ts",
+      "contentHash": "5908fdc569e6547f28ab43cd94b6536c815412d7c9a8a21a027b295c35814d84",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "tailwindcss",
+          "specifiers": [
+            "Config"
+          ]
+        },
+        {
+          "source": "@tailwindcss/typography",
+          "specifiers": [
+            "typography"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "client/tsconfig.json": {
+      "filePath": "client/tsconfig.json",
+      "contentHash": "f812524dfca9573ffb731637ff744c5ec4209cafedaabc425d19cd26d588e589",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "client/vite.config.ts": {
+      "filePath": "client/vite.config.ts",
+      "contentHash": "e4193cdec980610daee3fb6b77647069e2b38739d392a012ec7084b2b761eb68",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vite",
+          "specifiers": [
+            "defineConfig"
+          ]
+        },
+        {
+          "source": "@vitejs/plugin-react",
+          "specifiers": [
+            "react"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "d419fa1b6cc509b7d9388949396a8db9627e5c631112523994fbf059ec6d8898",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "84ea650ccaf015f7a2cb753aae84ace8223f1d1b5377f9bd8310b81efdbe5dbf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 83,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/bundle-server.mjs": {
+      "filePath": "scripts/bundle-server.mjs",
+      "contentHash": "a6690a9e38b64517b290b8c06d459ff6fb43c776064947f60f137481f96a798a",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "esbuild",
+          "specifiers": [
+            "* as esbuild"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "server/package.json": {
+      "filePath": "server/package.json",
+      "contentHash": "549cf45646dc4ec00c71840b1eef58ceb9ebe39ec066d013962e6853be43265c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/config.ts": {
+      "filePath": "server/src/config.ts",
+      "contentHash": "348f4ff847c0a880b3e302ca6a1b1fe753d8b986046065718d7ccf334b01c2d7",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:os",
+          "specifiers": [
+            "os"
+          ]
+        }
+      ],
+      "exports": [
+        "CLAUDE_HOME",
+        "PORT"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/index.ts": {
+      "filePath": "server/src/index.ts",
+      "contentHash": "d225abad1fc2e1a0dd2fc4aef580eb36cc4ba17f8a2b3aabf20671b13b515024",
+      "functions": [
+        {
+          "name": "serveClient",
+          "params": [],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "findClientDist",
+          "params": [],
+          "returnType": "string | null",
+          "exported": false,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "express"
+          ]
+        },
+        {
+          "source": "cors",
+          "specifiers": [
+            "cors"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:child_process",
+          "specifiers": [
+            "exec"
+          ]
+        },
+        {
+          "source": "./config",
+          "specifiers": [
+            "PORT"
+          ]
+        },
+        {
+          "source": "./routes/projects",
+          "specifiers": [
+            "projectsRouter"
+          ]
+        },
+        {
+          "source": "./routes/sessions",
+          "specifiers": [
+            "sessionsRouter"
+          ]
+        },
+        {
+          "source": "./routes/transcript",
+          "specifiers": [
+            "transcriptRouter"
+          ]
+        },
+        {
+          "source": "./routes/search",
+          "specifiers": [
+            "searchRouter"
+          ]
+        },
+        {
+          "source": "./middleware/errorHandler",
+          "specifiers": [
+            "errorHandler"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 94,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/middleware/errorHandler.ts": {
+      "filePath": "server/src/middleware/errorHandler.ts",
+      "contentHash": "ce15f5dd5ec14895efd3aee974a8730834911901f8015af353d3ff67d1246965",
+      "functions": [
+        {
+          "name": "errorHandler",
+          "params": [
+            "err",
+            "_req",
+            "res",
+            "_next"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Request",
+            "Response",
+            "NextFunction"
+          ]
+        }
+      ],
+      "exports": [
+        "errorHandler"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/routes/projects.ts": {
+      "filePath": "server/src/routes/projects.ts",
+      "contentHash": "bcda9adedcbfe2458ea75b23d92f9b7183bdc21301e218c041b91175b05d00fe",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        }
+      ],
+      "exports": [
+        "projectsRouter"
+      ],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/routes/search.ts": {
+      "filePath": "server/src/routes/search.ts",
+      "contentHash": "a0590735e9f837989e77568a928fc8ec9c1a3b2040db92b32690193a6de93ecf",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        }
+      ],
+      "exports": [
+        "searchRouter"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/routes/sessions.ts": {
+      "filePath": "server/src/routes/sessions.ts",
+      "contentHash": "bb626d8cb1fa14eaf4d865f799e0add092c303dc1b08030097f077f2447af5f5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        }
+      ],
+      "exports": [
+        "sessionsRouter"
+      ],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/routes/transcript.ts": {
+      "filePath": "server/src/routes/transcript.ts",
+      "contentHash": "b57a95040d73f47b428dcd861cd6082de9b7e09827dd94f98b4cdeace6d505c0",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "express",
+          "specifiers": [
+            "Router"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        },
+        {
+          "source": "../services/sessionMetadata",
+          "specifiers": [
+            "updateMeta"
+          ]
+        }
+      ],
+      "exports": [
+        "transcriptRouter"
+      ],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/historyReader.ts": {
+      "filePath": "server/src/services/historyReader.ts",
+      "contentHash": "0e1f121e81423041553efa42aee64f23fdf24ca9f6b7b54d0057cf0233808823",
+      "functions": [
+        {
+          "name": "readHistory",
+          "params": [],
+          "returnType": "Promise<HistoryEntry[]>",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "getHistoryBySession",
+          "params": [
+            "sessionId",
+            "history"
+          ],
+          "returnType": "HistoryEntry[]",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getHistoryByProject",
+          "params": [
+            "projectPath",
+            "history"
+          ],
+          "returnType": "HistoryEntry[]",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "search",
+          "params": [
+            "query"
+          ],
+          "returnType": "Promise<SearchResult[]>",
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "encodeProjectPath",
+          "params": [
+            "project"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:readline",
+          "specifiers": [
+            "readline"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        },
+        {
+          "source": "../types",
+          "specifiers": [
+            "HistoryEntry",
+            "SearchResult"
+          ]
+        }
+      ],
+      "exports": [
+        "readHistory",
+        "getHistoryBySession",
+        "getHistoryByProject",
+        "search"
+      ],
+      "totalLines": 79,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/pathEncoder.ts": {
+      "filePath": "server/src/services/pathEncoder.ts",
+      "contentHash": "7b5d52f2dda215006de7b1e27270e2c4c982e4b99088803f455b5b13c5175842",
+      "functions": [
+        {
+          "name": "encodePath",
+          "params": [
+            "realPath"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "decodePath",
+          "params": [
+            "encoded"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "getShortName",
+          "params": [
+            "encoded"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "encodePath",
+        "decodePath",
+        "getShortName"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/projectScanner.ts": {
+      "filePath": "server/src/services/projectScanner.ts",
+      "contentHash": "b6c3d85bb3515836296b8fcad982d31b5a0e96a7bc0f3bb4f5fadf07fd20fa5b",
+      "functions": [
+        {
+          "name": "buildPathMap",
+          "params": [],
+          "returnType": "Promise<Map<string, string>>",
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "getPathMap",
+          "params": [],
+          "returnType": "Promise<Map<string, string>>",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "scanProjects",
+          "params": [],
+          "returnType": "Promise<ProjectSummary[]>",
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "getProjectSessions",
+          "params": [
+            "projectId"
+          ],
+          "returnType": "Promise<SessionSummary[]>",
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "readSessionMeta",
+          "params": [
+            "filePath"
+          ],
+          "returnType": "Promise<{\n  title: string | null;\n  firstPrompt: string | null;\n  lineCount: number;\n  startedAt: string | null;\n  lastActivityAt: string | null;\n  gitBranch: string | null;\n}>",
+          "exported": false,
+          "lineCount": 53
+        },
+        {
+          "name": "findJsonlFiles",
+          "params": [
+            "dir"
+          ],
+          "returnType": "string[]",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "readCwdFromSession",
+          "params": [
+            "filePath"
+          ],
+          "returnType": "Promise<string | null>",
+          "exported": false,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:readline",
+          "specifiers": [
+            "readline"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        },
+        {
+          "source": "./pathEncoder",
+          "specifiers": [
+            "decodePath",
+            "encodePath"
+          ]
+        },
+        {
+          "source": "./sessionMetadata",
+          "specifiers": [
+            "readMeta"
+          ]
+        },
+        {
+          "source": "../types",
+          "specifiers": [
+            "ProjectSummary",
+            "SessionSummary"
+          ]
+        }
+      ],
+      "exports": [
+        "scanProjects",
+        "getProjectSessions"
+      ],
+      "totalLines": 209,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/sessionDelete.ts": {
+      "filePath": "server/src/services/sessionDelete.ts",
+      "contentHash": "f1010596b7d73d71939c2ef3446ba9e2bf2f591f8d1ae8d54502b32322390714",
+      "functions": [
+        {
+          "name": "deleteSession",
+          "params": [
+            "projectId",
+            "sessionId"
+          ],
+          "returnType": "Promise<void>",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "filterHistoryFile",
+          "params": [
+            "sessionId"
+          ],
+          "returnType": "Promise<void>",
+          "exported": false,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:readline",
+          "specifiers": [
+            "readline"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        }
+      ],
+      "exports": [
+        "deleteSession"
+      ],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/sessionMetadata.ts": {
+      "filePath": "server/src/services/sessionMetadata.ts",
+      "contentHash": "332a2239370c20e3fe098401ef410883bf84078ab5ad02f89e1fb786985c3dfe",
+      "functions": [
+        {
+          "name": "metaPath",
+          "params": [
+            "projectId",
+            "sessionId"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "readMeta",
+          "params": [
+            "projectId",
+            "sessionId"
+          ],
+          "returnType": "SessionMeta",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "writeMeta",
+          "params": [
+            "projectId",
+            "sessionId",
+            "meta"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "updateMeta",
+          "params": [
+            "projectId",
+            "sessionId",
+            "patch"
+          ],
+          "returnType": "SessionMeta",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        }
+      ],
+      "exports": [
+        "readMeta",
+        "writeMeta",
+        "updateMeta"
+      ],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/services/transcriptReader.ts": {
+      "filePath": "server/src/services/transcriptReader.ts",
+      "contentHash": "251fb413d8ef57bac42800720f10d9a2ecf755145823b7c126918184c57bf72c",
+      "functions": [
+        {
+          "name": "readTranscript",
+          "params": [
+            "projectId",
+            "sessionId",
+            "options"
+          ],
+          "returnType": "Promise<TranscriptResponse>",
+          "exported": true,
+          "lineCount": 35
+        },
+        {
+          "name": "parseTranscriptFile",
+          "params": [
+            "filePath",
+            "limit",
+            "offset"
+          ],
+          "returnType": "Promise<{\n  events: NormalizedEvent[];\n  totalEvents: number;\n  parseWarnings: number;\n  toolResults: Map<string, { content: string; isError: boolean; timestamp?: string }>;\n}>",
+          "exported": false,
+          "lineCount": 66
+        },
+        {
+          "name": "normalizeEvent",
+          "params": [
+            "obj"
+          ],
+          "returnType": "NormalizedEvent | null",
+          "exported": false,
+          "lineCount": 124
+        },
+        {
+          "name": "associateToolResults",
+          "params": [
+            "events",
+            "toolResults"
+          ],
+          "returnType": "NormalizedEvent[]",
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "loadSubagents",
+          "params": [
+            "projectId",
+            "sessionId"
+          ],
+          "returnType": "Promise<SubagentInfo[]>",
+          "exported": false,
+          "lineCount": 36
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "fs"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "path"
+          ]
+        },
+        {
+          "source": "node:readline",
+          "specifiers": [
+            "readline"
+          ]
+        },
+        {
+          "source": "../config",
+          "specifiers": [
+            "CLAUDE_HOME"
+          ]
+        },
+        {
+          "source": "../types",
+          "specifiers": [
+            "NormalizedEvent",
+            "TranscriptResponse",
+            "ContentBlock",
+            "SubagentInfo"
+          ]
+        }
+      ],
+      "exports": [
+        "readTranscript"
+      ],
+      "totalLines": 303,
+      "hasStructuralAnalysis": true
+    },
+    "server/src/types/index.ts": {
+      "filePath": "server/src/types/index.ts",
+      "contentHash": "ab4e0020058834fe2aaecf25e91d5f38cde858bb7b8807dc15bfc3a8ebd0b530",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "server/tsconfig.json": {
+      "filePath": "server/tsconfig.json",
+      "contentHash": "eaf9c8fcea6af267a582e3cc69406a49f58d6631d2f456b71bc0164089901f67",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/build.rs": {
+      "filePath": "src-tauri/build.rs",
+      "contentHash": "475e2e09e57f802634b6b3719b5e7a85e10db76a945e80f4f82b4ef63f28042c",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/capabilities/default.json": {
+      "filePath": "src-tauri/capabilities/default.json",
+      "contentHash": "0c871234f407661b3cf1d64ea764e05500420c12e703c781f8f059be492c5630",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/Cargo.toml": {
+      "filePath": "src-tauri/Cargo.toml",
+      "contentHash": "f3a13df03bad8c48ae6ce6505683c3b88ec0773305994d1234bc84be062a39c3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/icons/icon.icns": {
+      "filePath": "src-tauri/icons/icon.icns",
+      "contentHash": "2ec9ef4748b746c495d0733b953e8bb6cc590d180d0199ba9abfd2aaab57114a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1023,
+      "hasStructuralAnalysis": false
+    },
+    "src-tauri/src/lib.rs": {
+      "filePath": "src-tauri/src/lib.rs",
+      "contentHash": "f82f18dd25bece05e2b479e441c0fb2d5037e621fd4a5fa637e25c1cef0f88bc",
+      "functions": [
+        {
+          "name": "drop",
+          "params": [],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "is_server_running",
+          "params": [],
+          "returnType": "bool",
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "wait_for_server",
+          "params": [],
+          "returnType": "bool",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "hide_console",
+          "params": [
+            "cmd"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "hide_console",
+          "params": [
+            "_cmd"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "spawn_server",
+          "params": [
+            "_app"
+          ],
+          "returnType": "Option<Child>",
+          "exported": false,
+          "lineCount": 42
+        },
+        {
+          "name": "run",
+          "params": [],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [
+        {
+          "name": "ServerProcess",
+          "methods": [
+            "drop"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "imports": [
+        {
+          "source": "std::process",
+          "specifiers": [
+            "Child",
+            "Command"
+          ]
+        },
+        {
+          "source": "std::sync",
+          "specifiers": [
+            "Mutex"
+          ]
+        },
+        {
+          "source": "std::time",
+          "specifiers": [
+            "Duration"
+          ]
+        },
+        {
+          "source": "tauri",
+          "specifiers": [
+            "Manager"
+          ]
+        }
+      ],
+      "exports": [
+        "run"
+      ],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/src/main.rs": {
+      "filePath": "src-tauri/src/main.rs",
+      "contentHash": "78a244bdd0351e245f87068dc26b42235a62bf9092fddbc68e92c7eec8b0bc54",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "src-tauri/tauri.conf.json": {
+      "filePath": "src-tauri/tauri.conf.json",
+      "contentHash": "82a29ca6f60104ba6d609f3e5e6052c30af8b0d8d546a8c3108b443221011baf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

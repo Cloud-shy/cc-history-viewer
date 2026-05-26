@@ -1,0 +1,3750 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "cc-history-viewer",
+    "languages": [
+      "css",
+      "html",
+      "javascript",
+      "json",
+      "markdown",
+      "rust",
+      "toml",
+      "typescript"
+    ],
+    "frameworks": [
+      "Express",
+      "React",
+      "Tailwind CSS",
+      "Tauri",
+      "Vite",
+      "serde"
+    ],
+    "description": "A native Windows desktop app for browsing Claude Code conversation history. Built with Tauri + Express + React.",
+    "analyzedAt": "2026-05-26T23:29:44.077Z",
+    "gitCommitHash": "7cef6c92cd8d8ba866cffaf0c0e8f4d92c01a0b6"
+  },
+  "nodes": [
+    {
+      "id": "file:server/src/config.ts",
+      "type": "file",
+      "name": "config.ts",
+      "filePath": "server/src/config.ts",
+      "summary": "Server-wide configuration constants: resolves the Claude home directory (~/.claude) and the HTTP port from environment variables with sensible defaults.",
+      "tags": [
+        "configuration",
+        "environment",
+        "constants"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "server/src/index.ts",
+      "summary": "Express application entry point that wires up CORS, JSON parsing, API routes, static client serving, and auto-opens the browser in standalone mode.",
+      "tags": [
+        "entry-point",
+        "express-server",
+        "api",
+        "bootstrap"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/index.ts:serveClient",
+      "type": "function",
+      "name": "serveClient",
+      "filePath": "server/src/index.ts",
+      "lineRange": [
+        61,
+        75
+      ],
+      "summary": "Scans for the client build directory and configures Express to serve static files with SPA fallback, falling back to API-only mode when no client dist is found.",
+      "tags": [
+        "static-serving",
+        "spa-fallback",
+        "express"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/index.ts:findClientDist",
+      "type": "function",
+      "name": "findClientDist",
+      "filePath": "server/src/index.ts",
+      "lineRange": [
+        77,
+        93
+      ],
+      "summary": "Probes multiple candidate paths (dev, bundled, Tauri embedded) to locate the built client distribution directory.",
+      "tags": [
+        "file-discovery",
+        "build-path",
+        "tauri"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/middleware/errorHandler.ts",
+      "type": "file",
+      "name": "errorHandler.ts",
+      "filePath": "server/src/middleware/errorHandler.ts",
+      "summary": "Express error-handling middleware that logs errors to stderr and returns a structured JSON error response.",
+      "tags": [
+        "middleware",
+        "error-handling",
+        "express"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/middleware/errorHandler.ts:errorHandler",
+      "type": "function",
+      "name": "errorHandler",
+      "filePath": "server/src/middleware/errorHandler.ts",
+      "lineRange": [
+        3,
+        14
+      ],
+      "summary": "Catches unhandled Express errors, logs them via console.error, and responds with a JSON error object including message and optional details.",
+      "tags": [
+        "middleware",
+        "error-handling",
+        "express"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/routes/projects.ts",
+      "type": "file",
+      "name": "projects.ts",
+      "filePath": "server/src/routes/projects.ts",
+      "summary": "API route handler for GET /api/projects — dynamically imports and calls scanProjects to list all Claude Code project directories.",
+      "tags": [
+        "api-handler",
+        "route",
+        "express-router",
+        "projects"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/routes/search.ts",
+      "type": "file",
+      "name": "search.ts",
+      "filePath": "server/src/routes/search.ts",
+      "summary": "API route handler for GET /api/search — dynamically imports and calls search to query across the Claude conversation history.",
+      "tags": [
+        "api-handler",
+        "route",
+        "express-router",
+        "search"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/routes/sessions.ts",
+      "type": "file",
+      "name": "sessions.ts",
+      "filePath": "server/src/routes/sessions.ts",
+      "summary": "API route handler for GET /api/projects/:projectId/sessions — dynamically imports and calls getProjectSessions to list conversations for a project.",
+      "tags": [
+        "api-handler",
+        "route",
+        "express-router",
+        "sessions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/routes/transcript.ts",
+      "type": "file",
+      "name": "transcript.ts",
+      "filePath": "server/src/routes/transcript.ts",
+      "summary": "API route handler providing GET, PATCH, and DELETE endpoints for session transcripts — reads transcripts, updates metadata, and deletes sessions with their JSONL files.",
+      "tags": [
+        "api-handler",
+        "route",
+        "express-router",
+        "transcript"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:server/src/services/historyReader.ts",
+      "type": "file",
+      "name": "historyReader.ts",
+      "filePath": "server/src/services/historyReader.ts",
+      "summary": "Reads the Claude conversation history JSONL file and provides search, filtering by session/project, and project-path encoding utilities.",
+      "tags": [
+        "service",
+        "file-io",
+        "search",
+        "history"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/historyReader.ts:readHistory",
+      "type": "function",
+      "name": "readHistory",
+      "filePath": "server/src/services/historyReader.ts",
+      "lineRange": [
+        11,
+        33
+      ],
+      "summary": "Streams the history JSONL file line-by-line, parses each entry as JSON, and returns the full array of HistoryEntry objects.",
+      "tags": [
+        "service",
+        "file-io",
+        "jsonl-parsing",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/historyReader.ts:search",
+      "type": "function",
+      "name": "search",
+      "filePath": "server/src/services/historyReader.ts",
+      "lineRange": [
+        45,
+        74
+      ],
+      "summary": "Performs a case-insensitive full-text search across history entries by display text, returning deduplicated SearchResult objects with match snippets.",
+      "tags": [
+        "service",
+        "search",
+        "deduplication"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:server/src/services/pathEncoder.ts",
+      "type": "file",
+      "name": "pathEncoder.ts",
+      "filePath": "server/src/services/pathEncoder.ts",
+      "summary": "Encodes filesystem paths to filesystem-safe identifiers (replacing slashes/colons with dashes) and decodes them back with drive-letter extraction for Windows paths.",
+      "tags": [
+        "service",
+        "encoding",
+        "utility",
+        "filesystem"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/pathEncoder.ts:encodePath",
+      "type": "function",
+      "name": "encodePath",
+      "filePath": "server/src/services/pathEncoder.ts",
+      "lineRange": [
+        5,
+        7
+      ],
+      "summary": "Encodes a real filesystem path to a safe identifier string by replacing backslashes and colons with dashes.",
+      "tags": [
+        "service",
+        "encoding",
+        "utility",
+        "path-normalization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/pathEncoder.ts:decodePath",
+      "type": "function",
+      "name": "decodePath",
+      "filePath": "server/src/services/pathEncoder.ts",
+      "lineRange": [
+        9,
+        23
+      ],
+      "summary": "Decodes an encoded path identifier back to a real filesystem path, extracting Windows drive letters from a leading prefix.",
+      "tags": [
+        "service",
+        "encoding",
+        "decoding",
+        "windows-path"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/pathEncoder.ts:getShortName",
+      "type": "function",
+      "name": "getShortName",
+      "filePath": "server/src/services/pathEncoder.ts",
+      "lineRange": [
+        25,
+        30
+      ],
+      "summary": "Extracts a human-readable short project name from an encoded path by decoding and returning the deepest directory segment.",
+      "tags": [
+        "service",
+        "utility",
+        "display-name"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/services/projectScanner.ts",
+      "type": "file",
+      "name": "projectScanner.ts",
+      "filePath": "server/src/services/projectScanner.ts",
+      "summary": "Core scanner that discovers Claude Code projects and sessions by reading the history file, resolving path mappings, and extracting session metadata from JSONL transcript files.",
+      "tags": [
+        "service",
+        "scanner",
+        "project-management",
+        "file-io"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Builds an in-memory path-to-project map from the history JSONL, then scans session directories with streaming line-by-line JSONL parsing for metadata extraction."
+    },
+    {
+      "id": "function:server/src/services/projectScanner.ts:buildPathMap",
+      "type": "function",
+      "name": "buildPathMap",
+      "filePath": "server/src/services/projectScanner.ts",
+      "lineRange": [
+        12,
+        32
+      ],
+      "summary": "Reads the history JSONL file and builds a Map from encoded project paths to display paths, resolving duplicates by keeping the most recent entry.",
+      "tags": [
+        "service",
+        "mapping",
+        "jsonl-parsing",
+        "deduplication"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/projectScanner.ts:scanProjects",
+      "type": "function",
+      "name": "scanProjects",
+      "filePath": "server/src/services/projectScanner.ts",
+      "lineRange": [
+        43,
+        79
+      ],
+      "summary": "Scans the Claude projects directory, finds JSONL session files per project, resolves display paths, and returns a sorted list of ProjectSummary objects.",
+      "tags": [
+        "service",
+        "scanner",
+        "project-discovery",
+        "public-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/projectScanner.ts:getProjectSessions",
+      "type": "function",
+      "name": "getProjectSessions",
+      "filePath": "server/src/services/projectScanner.ts",
+      "lineRange": [
+        81,
+        120
+      ],
+      "summary": "Lists all sessions for a given project by scanning the project's session directory, reading metadata for each JSONL file, and returning sorted SessionSummary objects.",
+      "tags": [
+        "service",
+        "session-listing",
+        "metadata",
+        "public-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/projectScanner.ts:readSessionMeta",
+      "type": "function",
+      "name": "readSessionMeta",
+      "filePath": "server/src/services/projectScanner.ts",
+      "lineRange": [
+        122,
+        174
+      ],
+      "summary": "Streams a session JSONL file to extract display metadata: first user prompt, message count, timestamps, and conversation title from the first assistant message.",
+      "tags": [
+        "service",
+        "metadata-extraction",
+        "jsonl-parsing",
+        "streaming"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/projectScanner.ts:readCwdFromSession",
+      "type": "function",
+      "name": "readCwdFromSession",
+      "filePath": "server/src/services/projectScanner.ts",
+      "lineRange": [
+        186,
+        208
+      ],
+      "summary": "Reads the first entry of a session JSONL file to extract the cwd (working directory) field with early stream termination for efficiency.",
+      "tags": [
+        "service",
+        "cwd-extraction",
+        "jsonl-parsing",
+        "streaming"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Destroys the read stream after finding the first entry to avoid reading the entire file for a single field."
+    },
+    {
+      "id": "file:server/src/services/sessionDelete.ts",
+      "type": "file",
+      "name": "sessionDelete.ts",
+      "filePath": "server/src/services/sessionDelete.ts",
+      "summary": "Deletes a session by removing its JSONL transcript and metadata files, then rewriting the shared history file to exclude the deleted session's entries.",
+      "tags": [
+        "service",
+        "session-management",
+        "file-io",
+        "deletion"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/sessionDelete.ts:deleteSession",
+      "type": "function",
+      "name": "deleteSession",
+      "filePath": "server/src/services/sessionDelete.ts",
+      "lineRange": [
+        9,
+        26
+      ],
+      "summary": "Orchestrates full session deletion: removes the JSONL file, project session directory if empty, and filters the history file of entries referencing the deleted session.",
+      "tags": [
+        "service",
+        "session-management",
+        "deletion",
+        "public-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/sessionDelete.ts:filterHistoryFile",
+      "type": "function",
+      "name": "filterHistoryFile",
+      "filePath": "server/src/services/sessionDelete.ts",
+      "lineRange": [
+        28,
+        55
+      ],
+      "summary": "Streams the shared history JSONL, rewrites it excluding all entries whose sessionId matches the deleted session, with atomic rename for safety.",
+      "tags": [
+        "service",
+        "file-filtering",
+        "jsonl-rewrite",
+        "atomic-write"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses write-to-temp-then-rename pattern for atomic file replacement during history filtering."
+    },
+    {
+      "id": "file:server/src/services/sessionMetadata.ts",
+      "type": "file",
+      "name": "sessionMetadata.ts",
+      "filePath": "server/src/services/sessionMetadata.ts",
+      "summary": "Manages per-session metadata files (JSON) stored alongside transcripts — supports reading, writing, and partial updates for fields like customTitle and starred.",
+      "tags": [
+        "service",
+        "session-management",
+        "metadata",
+        "file-io"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/sessionMetadata.ts:readMeta",
+      "type": "function",
+      "name": "readMeta",
+      "filePath": "server/src/services/sessionMetadata.ts",
+      "lineRange": [
+        16,
+        27
+      ],
+      "summary": "Reads and parses the session metadata JSON file, returning the metadata object or an empty default if the file does not exist.",
+      "tags": [
+        "service",
+        "metadata",
+        "file-read",
+        "public-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/sessionMetadata.ts:writeMeta",
+      "type": "function",
+      "name": "writeMeta",
+      "filePath": "server/src/services/sessionMetadata.ts",
+      "lineRange": [
+        29,
+        35
+      ],
+      "summary": "Writes a session metadata object to disk as JSON, creating the parent directory if needed.",
+      "tags": [
+        "service",
+        "metadata",
+        "file-write",
+        "public-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:server/src/services/sessionMetadata.ts:updateMeta",
+      "type": "function",
+      "name": "updateMeta",
+      "filePath": "server/src/services/sessionMetadata.ts",
+      "lineRange": [
+        37,
+        46
+      ],
+      "summary": "Merges a partial update into existing session metadata by reading, spreading the patch, and writing back the merged result.",
+      "tags": [
+        "service",
+        "metadata",
+        "partial-update",
+        "public-api"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server/src/services/transcriptReader.ts",
+      "type": "file",
+      "name": "transcriptReader.ts",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "summary": "Reads and normalizes Claude Code transcript JSONL files — parses events, associates tool results, resolves sub-agents, and produces a structured TranscriptResponse.",
+      "tags": [
+        "service",
+        "transcript-parsing",
+        "jsonl-parsing",
+        "event-normalization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Implements a sophisticated event normalization pipeline handling multiple Claude message schemas (v1/v2), content blocks (thinking, text, tool_use, tool_result), and sub-agent transcript loading."
+    },
+    {
+      "id": "function:server/src/services/transcriptReader.ts:readTranscript",
+      "type": "function",
+      "name": "readTranscript",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "lineRange": [
+        9,
+        43
+      ],
+      "summary": "Public entry point for reading a session transcript — parses the JSONL file, associates tool results with their calls, loads sub-agent transcripts, and returns the complete TranscriptResponse.",
+      "tags": [
+        "service",
+        "transcript",
+        "orchestration",
+        "public-api"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/transcriptReader.ts:parseTranscriptFile",
+      "type": "function",
+      "name": "parseTranscriptFile",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "lineRange": [
+        45,
+        110
+      ],
+      "summary": "Streams a single JSONL transcript file, parses each line as JSON, normalizes events, collects tool results in a Map, and returns events with pagination support.",
+      "tags": [
+        "service",
+        "jsonl-parsing",
+        "streaming",
+        "pagination"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/transcriptReader.ts:normalizeEvent",
+      "type": "function",
+      "name": "normalizeEvent",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "lineRange": [
+        112,
+        235
+      ],
+      "summary": "Transforms raw JSONL event objects into the uniform NormalizedEvent schema, handling multiple Claude API message shapes and extracting content blocks, tool calls, and token usage.",
+      "tags": [
+        "service",
+        "event-normalization",
+        "schema-mapping",
+        "content-blocks"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:server/src/services/transcriptReader.ts:associateToolResults",
+      "type": "function",
+      "name": "associateToolResults",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "lineRange": [
+        237,
+        265
+      ],
+      "summary": "Post-processes normalized events to attach tool_result blocks to their corresponding tool_use blocks within each assistant message.",
+      "tags": [
+        "service",
+        "tool-association",
+        "post-processing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:server/src/services/transcriptReader.ts:loadSubagents",
+      "type": "function",
+      "name": "loadSubagents",
+      "filePath": "server/src/services/transcriptReader.ts",
+      "lineRange": [
+        267,
+        302
+      ],
+      "summary": "Discovers and loads sub-agent transcripts from the session directory, parsing each agent file and associating tool results within its events.",
+      "tags": [
+        "service",
+        "subagents",
+        "transcript-loading"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:server/src/types/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "server/src/types/index.ts",
+      "summary": "TypeScript type definitions for the server domain model: HistoryEntry, ProjectSummary, SessionSummary, NormalizedEvent with ContentBlocks, TranscriptResponse, and SearchResult.",
+      "tags": [
+        "type-definition",
+        "data-model",
+        "barrel",
+        "domain-types"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/chat/AssistantMessage.tsx",
+      "type": "file",
+      "name": "AssistantMessage.tsx",
+      "filePath": "client/src/components/chat/AssistantMessage.tsx",
+      "summary": "Renders assistant conversation events with collapsible thinking blocks, tool call summaries, markdown text blocks, and a copy-to-clipboard action.",
+      "tags": [
+        "react-component",
+        "chat",
+        "assistant-message",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/chat/ChatWindow.tsx",
+      "type": "file",
+      "name": "ChatWindow.tsx",
+      "filePath": "client/src/components/chat/ChatWindow.tsx",
+      "summary": "Main chat view that fetches transcript events, renders the message list with filters, provides markdown export, and supports session deletion.",
+      "tags": [
+        "react-component",
+        "chat",
+        "entry-point",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/chat/MessageBubble.tsx",
+      "type": "file",
+      "name": "MessageBubble.tsx",
+      "filePath": "client/src/components/chat/MessageBubble.tsx",
+      "summary": "Router component that dispatches to AssistantMessage, SystemEvent, or UserMessage renderers based on the event's role field.",
+      "tags": [
+        "react-component",
+        "chat",
+        "router",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/chat/SystemEvent.tsx",
+      "type": "file",
+      "name": "SystemEvent.tsx",
+      "filePath": "client/src/components/chat/SystemEvent.tsx",
+      "summary": "Renders system-level conversation events such as session start notifications and context changes with an info visual style.",
+      "tags": [
+        "react-component",
+        "chat",
+        "system-event",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/chat/TextBlock.tsx",
+      "type": "file",
+      "name": "TextBlock.tsx",
+      "filePath": "client/src/components/chat/TextBlock.tsx",
+      "summary": "Markdown-capable text renderer that parses fenced code blocks with language detection, syntax highlighting, and clipboard copy support.",
+      "tags": [
+        "react-component",
+        "chat",
+        "markdown",
+        "code-highlight"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "type": "file",
+      "name": "ThinkingBlock.tsx",
+      "filePath": "client/src/components/chat/ThinkingBlock.tsx",
+      "summary": "Collapsible thinking block that shows the AI's reasoning process with a toggleable expand/collapse UI and signature preview.",
+      "tags": [
+        "react-component",
+        "chat",
+        "thinking",
+        "collapsible"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "type": "file",
+      "name": "ToolCallBlock.tsx",
+      "filePath": "client/src/components/chat/ToolCallBlock.tsx",
+      "summary": "Collapsible tool call display that extracts a human-readable summary from tool inputs and shows raw JSON on expand.",
+      "tags": [
+        "react-component",
+        "chat",
+        "tool-call",
+        "collapsible"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/chat/UserMessage.tsx",
+      "type": "file",
+      "name": "UserMessage.tsx",
+      "filePath": "client/src/components/chat/UserMessage.tsx",
+      "summary": "Renders user messages with formatted timestamp, content body, and a copy-to-clipboard button.",
+      "tags": [
+        "react-component",
+        "chat",
+        "user-message",
+        "ui"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/shared/CopyButton.tsx",
+      "type": "file",
+      "name": "CopyButton.tsx",
+      "filePath": "client/src/components/shared/CopyButton.tsx",
+      "summary": "Reusable icon button that copies text to the system clipboard with a brief visual confirmation feedback.",
+      "tags": [
+        "react-component",
+        "shared",
+        "copy",
+        "clipboard"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/shared/FilterBar.tsx",
+      "type": "file",
+      "name": "FilterBar.tsx",
+      "filePath": "client/src/components/shared/FilterBar.tsx",
+      "summary": "Toggle bar for filtering conversation events by type (user/assistant/system/thinking/tool) and toggling reader mode.",
+      "tags": [
+        "react-component",
+        "filter",
+        "toggle",
+        "ui"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/types/index.ts",
+      "type": "file",
+      "name": "index.ts",
+      "filePath": "client/src/types/index.ts",
+      "summary": "Central TypeScript type definitions for the client, including Project, Session, NormalizedEvent, ContentBlock interfaces and the DEFAULT_FILTERS constant.",
+      "tags": [
+        "type-definition",
+        "barrel",
+        "types"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Defines core domain types as TypeScript interfaces with union and literal types for event and block discrimination."
+    },
+    {
+      "id": "file:client/src/utils/dateFormat.ts",
+      "type": "file",
+      "name": "dateFormat.ts",
+      "filePath": "client/src/utils/dateFormat.ts",
+      "summary": "Date formatting utility providing relative time display (today, yesterday, days ago) and full locale date strings from ISO timestamps.",
+      "tags": [
+        "utility",
+        "date",
+        "formatting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/utils/exportMarkdown.ts",
+      "type": "file",
+      "name": "exportMarkdown.ts",
+      "filePath": "client/src/utils/exportMarkdown.ts",
+      "summary": "Converts conversation events into formatted markdown text and triggers a browser file download for offline conversation export.",
+      "tags": [
+        "utility",
+        "export",
+        "markdown",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/chat/AssistantMessage.tsx:AssistantMessage",
+      "type": "function",
+      "name": "AssistantMessage",
+      "filePath": "client/src/components/chat/AssistantMessage.tsx",
+      "lineRange": [
+        20,
+        65
+      ],
+      "summary": "React component that renders an assistant event with block-type visibility filtering, token usage stats, and copy/extract actions.",
+      "tags": [
+        "react-component",
+        "assistant",
+        "chat",
+        "message"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/chat/AssistantMessage.tsx:BlockRenderer",
+      "type": "function",
+      "name": "BlockRenderer",
+      "filePath": "client/src/components/chat/AssistantMessage.tsx",
+      "lineRange": [
+        67,
+        102
+      ],
+      "summary": "Internal sub-component that routes individual content blocks to TextBlock, ThinkingBlock, or ToolCallBlock based on blockType.",
+      "tags": [
+        "react-component",
+        "block-renderer",
+        "chat"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/chat/ChatWindow.tsx:ChatWindow",
+      "type": "function",
+      "name": "ChatWindow",
+      "filePath": "client/src/components/chat/ChatWindow.tsx",
+      "lineRange": [
+        14,
+        133
+      ],
+      "summary": "Top-level chat component that fetches transcript data, manages filter/reader state, renders the message list and session info header, and handles export and delete actions.",
+      "tags": [
+        "react-component",
+        "chat-window",
+        "entry-point",
+        "chat"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:client/src/components/chat/MessageBubble.tsx:MessageBubble",
+      "type": "function",
+      "name": "MessageBubble",
+      "filePath": "client/src/components/chat/MessageBubble.tsx",
+      "lineRange": [
+        12,
+        30
+      ],
+      "summary": "Message router component that conditionally renders the appropriate message component based on the event's role field.",
+      "tags": [
+        "react-component",
+        "message-router",
+        "chat"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/chat/SystemEvent.tsx:SystemEvent",
+      "type": "function",
+      "name": "SystemEvent",
+      "filePath": "client/src/components/chat/SystemEvent.tsx",
+      "lineRange": [
+        15,
+        31
+      ],
+      "summary": "Renders a system event with a styled info banner, timestamp, and event content text.",
+      "tags": [
+        "react-component",
+        "system",
+        "chat"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/chat/TextBlock.tsx:TextBlock",
+      "type": "function",
+      "name": "TextBlock",
+      "filePath": "client/src/components/chat/TextBlock.tsx",
+      "lineRange": [
+        10,
+        82
+      ],
+      "summary": "Markdown text renderer that parses content for fenced code blocks, applies syntax highlighting via language detection, and supports clipboard copy.",
+      "tags": [
+        "react-component",
+        "text",
+        "markdown",
+        "code"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/chat/ThinkingBlock.tsx:ThinkingBlock",
+      "type": "function",
+      "name": "ThinkingBlock",
+      "filePath": "client/src/components/chat/ThinkingBlock.tsx",
+      "lineRange": [
+        10,
+        36
+      ],
+      "summary": "Collapsible accordion component for displaying AI thinking/reasoning blocks with open/close toggle state.",
+      "tags": [
+        "react-component",
+        "thinking",
+        "collapsible"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/chat/ToolCallBlock.tsx:ToolCallBlock",
+      "type": "function",
+      "name": "ToolCallBlock",
+      "filePath": "client/src/components/chat/ToolCallBlock.tsx",
+      "lineRange": [
+        9,
+        52
+      ],
+      "summary": "Collapsible component that displays tool call metadata, a human-readable summary, and raw JSON input on expand.",
+      "tags": [
+        "react-component",
+        "tool-call",
+        "collapsible"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/chat/UserMessage.tsx:UserMessage",
+      "type": "function",
+      "name": "UserMessage",
+      "filePath": "client/src/components/chat/UserMessage.tsx",
+      "lineRange": [
+        9,
+        32
+      ],
+      "summary": "Renders a user message bubble with a formatted timestamp, message content, and copy-to-clipboard button.",
+      "tags": [
+        "react-component",
+        "user",
+        "chat"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/shared/CopyButton.tsx:CopyButton",
+      "type": "function",
+      "name": "CopyButton",
+      "filePath": "client/src/components/shared/CopyButton.tsx",
+      "lineRange": [
+        7,
+        34
+      ],
+      "summary": "Reusable icon button that writes text to the system clipboard and shows a brief checkmark confirmation for 2 seconds.",
+      "tags": [
+        "react-component",
+        "copy",
+        "clipboard"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/shared/FilterBar.tsx:FilterBar",
+      "type": "function",
+      "name": "FilterBar",
+      "filePath": "client/src/components/shared/FilterBar.tsx",
+      "lineRange": [
+        11,
+        63
+      ],
+      "summary": "Toggle bar component that dispatches filter changes and reader mode toggles to the global app state via useAppState.",
+      "tags": [
+        "react-component",
+        "filter",
+        "toggle"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/utils/dateFormat.ts:formatDate",
+      "type": "function",
+      "name": "formatDate",
+      "filePath": "client/src/utils/dateFormat.ts",
+      "lineRange": [
+        1,
+        15
+      ],
+      "summary": "Formats an ISO date string into a relative time label such as 'Today 2:30 PM', 'Yesterday 10:15 AM', or a short locale date for older timestamps.",
+      "tags": [
+        "utility",
+        "date",
+        "formatting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/utils/dateFormat.ts:formatFullDate",
+      "type": "function",
+      "name": "formatFullDate",
+      "filePath": "client/src/utils/dateFormat.ts",
+      "lineRange": [
+        17,
+        20
+      ],
+      "summary": "Formats an ISO date string into a full locale date and time string for detailed display.",
+      "tags": [
+        "utility",
+        "date",
+        "formatting"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/utils/exportMarkdown.ts:eventsToMarkdown",
+      "type": "function",
+      "name": "eventsToMarkdown",
+      "filePath": "client/src/utils/exportMarkdown.ts",
+      "lineRange": [
+        7,
+        68
+      ],
+      "summary": "Converts an array of conversation events into a formatted markdown string with headers, timestamps, and block-type-aware content rendering.",
+      "tags": [
+        "utility",
+        "markdown",
+        "export",
+        "serialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/utils/exportMarkdown.ts:downloadMarkdown",
+      "type": "function",
+      "name": "downloadMarkdown",
+      "filePath": "client/src/utils/exportMarkdown.ts",
+      "lineRange": [
+        70,
+        79
+      ],
+      "summary": "Generates markdown from events via eventsToMarkdown and triggers a browser file download as a .md file via a temporary anchor element.",
+      "tags": [
+        "utility",
+        "download",
+        "markdown",
+        "export"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/App.tsx",
+      "type": "file",
+      "name": "App.tsx",
+      "filePath": "client/src/App.tsx",
+      "summary": "Root React component that wraps the Shell layout in the AppProvider context for global state management.",
+      "tags": [
+        "entry-point",
+        "react-component",
+        "root"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/api/client.ts",
+      "type": "file",
+      "name": "client.ts",
+      "filePath": "client/src/api/client.ts",
+      "summary": "API client module providing typed fetch helpers and endpoint methods for all backend operations including projects, sessions, and search.",
+      "tags": [
+        "api-client",
+        "http",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/layout/MainPanel.tsx",
+      "type": "file",
+      "name": "MainPanel.tsx",
+      "filePath": "client/src/components/layout/MainPanel.tsx",
+      "summary": "Main content panel component that renders the ChatWindow for the currently selected session.",
+      "tags": [
+        "layout",
+        "react-component",
+        "container"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/layout/Shell.tsx",
+      "type": "file",
+      "name": "Shell.tsx",
+      "filePath": "client/src/components/layout/Shell.tsx",
+      "summary": "Top-level application shell implementing keyboard shortcuts for session rename and deletion, theme toggling, and the primary two-panel layout.",
+      "tags": [
+        "layout",
+        "react-component",
+        "keyboard-shortcuts",
+        "shell"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses useEffect for global keyboard shortcut registration with cleanup on unmount."
+    },
+    {
+      "id": "file:client/src/components/layout/Sidebar.tsx",
+      "type": "file",
+      "name": "Sidebar.tsx",
+      "filePath": "client/src/components/layout/Sidebar.tsx",
+      "summary": "Sidebar navigation component managing project selection, session listing with inline rename, starring, deletion, and right-click context menu actions.",
+      "tags": [
+        "navigation",
+        "react-component",
+        "sidebar",
+        "session-management"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Complex React component orchestrating multiple sub-components with useCallback-memoized handlers for performance."
+    },
+    {
+      "id": "file:client/src/components/shared/ContextMenu.tsx",
+      "type": "file",
+      "name": "ContextMenu.tsx",
+      "filePath": "client/src/components/shared/ContextMenu.tsx",
+      "summary": "Reusable context menu component with viewport-aware positioning and click-outside plus Escape key dismissal.",
+      "tags": [
+        "ui-component",
+        "context-menu",
+        "reusable",
+        "overlay"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses useRef + useEffect for click-outside detection pattern common in React UI components."
+    },
+    {
+      "id": "file:client/src/components/shared/SettingsPanel.tsx",
+      "type": "file",
+      "name": "SettingsPanel.tsx",
+      "filePath": "client/src/components/shared/SettingsPanel.tsx",
+      "summary": "Settings panel with tabbed interface for customizing appearance settings including theme, font family, font size, and display preferences.",
+      "tags": [
+        "settings",
+        "react-component",
+        "ui",
+        "appearance"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:client/src/components/shared/Toast.tsx",
+      "type": "file",
+      "name": "Toast.tsx",
+      "filePath": "client/src/components/shared/Toast.tsx",
+      "summary": "Toast notification container that renders and manages auto-dismissing toast messages from the global application state.",
+      "tags": [
+        "ui-component",
+        "toast",
+        "notification",
+        "reusable"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/sidebar/SearchBar.tsx",
+      "type": "file",
+      "name": "SearchBar.tsx",
+      "filePath": "client/src/components/sidebar/SearchBar.tsx",
+      "summary": "Search bar component with Ctrl+K keyboard shortcut focus, debounced API search, and result dispatching to global state.",
+      "tags": [
+        "search",
+        "react-component",
+        "sidebar",
+        "debounce"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/components/sidebar/SessionList.tsx",
+      "type": "file",
+      "name": "SessionList.tsx",
+      "filePath": "client/src/components/sidebar/SessionList.tsx",
+      "summary": "Session list component rendering sessions grouped by project with click-selection and right-click context menu handlers.",
+      "tags": [
+        "session-list",
+        "react-component",
+        "sidebar",
+        "grouped-list"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/context/AppContext.tsx",
+      "type": "file",
+      "name": "AppContext.tsx",
+      "filePath": "client/src/context/AppContext.tsx",
+      "summary": "Global application state management using React Context and useReducer with localStorage persistence for settings, projects, sessions, search results, and toast notifications.",
+      "tags": [
+        "state-management",
+        "context",
+        "reducer",
+        "persistence"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Uses React Context + useReducer pattern for global state management with localStorage persistence — a lightweight alternative to external state libraries."
+    },
+    {
+      "id": "file:client/src/main.tsx",
+      "type": "file",
+      "name": "main.tsx",
+      "filePath": "client/src/main.tsx",
+      "summary": "Application entry point that renders the App component into the DOM root within React StrictMode.",
+      "tags": [
+        "entry-point",
+        "bootstrap",
+        "react-dom"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/App.tsx:App",
+      "type": "function",
+      "name": "App",
+      "filePath": "client/src/App.tsx",
+      "lineRange": [
+        4,
+        10
+      ],
+      "summary": "Root component wrapping Shell in AppProvider for global state access across the application.",
+      "tags": [
+        "react-component",
+        "root",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/layout/MainPanel.tsx:MainPanel",
+      "type": "function",
+      "name": "MainPanel",
+      "filePath": "client/src/components/layout/MainPanel.tsx",
+      "lineRange": [
+        4,
+        45
+      ],
+      "summary": "Main panel component that conditionally renders the ChatWindow based on whether a session is selected.",
+      "tags": [
+        "react-component",
+        "layout",
+        "container"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/layout/Shell.tsx:Shell",
+      "type": "function",
+      "name": "Shell",
+      "filePath": "client/src/components/layout/Shell.tsx",
+      "lineRange": [
+        9,
+        88
+      ],
+      "summary": "Application shell with keyboard shortcuts for session operations, theme toggling, and the primary two-panel layout structure.",
+      "tags": [
+        "react-component",
+        "layout",
+        "keyboard-shortcuts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/layout/Sidebar.tsx:Sidebar",
+      "type": "function",
+      "name": "Sidebar",
+      "filePath": "client/src/components/layout/Sidebar.tsx",
+      "lineRange": [
+        8,
+        258
+      ],
+      "summary": "Sidebar component orchestrating project selection, session management with rename, star toggle, and delete operations via context menu integration.",
+      "tags": [
+        "react-component",
+        "navigation",
+        "session-management"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:client/src/components/layout/Sidebar.tsx:groupByProject",
+      "type": "function",
+      "name": "groupByProject",
+      "filePath": "client/src/components/layout/Sidebar.tsx",
+      "lineRange": [
+        260,
+        274
+      ],
+      "summary": "Utility function that groups search results by their parent project for organized display in the sidebar.",
+      "tags": [
+        "utility",
+        "data-grouping",
+        "search"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/shared/ContextMenu.tsx:ContextMenu",
+      "type": "function",
+      "name": "ContextMenu",
+      "filePath": "client/src/components/shared/ContextMenu.tsx",
+      "lineRange": [
+        15,
+        75
+      ],
+      "summary": "Positioned context menu with viewport-aware coordinate clamping and click-outside plus Escape key dismissal.",
+      "tags": [
+        "ui-component",
+        "context-menu",
+        "overlay"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/shared/SettingsPanel.tsx:SettingsPanel",
+      "type": "function",
+      "name": "SettingsPanel",
+      "filePath": "client/src/components/shared/SettingsPanel.tsx",
+      "lineRange": [
+        28,
+        226
+      ],
+      "summary": "Settings panel with tabbed navigation for appearance customization (theme, font, size) and display preferences, dispatching changes to global state.",
+      "tags": [
+        "react-component",
+        "settings",
+        "appearance"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:client/src/components/shared/Toast.tsx:ToastContainer",
+      "type": "function",
+      "name": "ToastContainer",
+      "filePath": "client/src/components/shared/Toast.tsx",
+      "lineRange": [
+        3,
+        42
+      ],
+      "summary": "Toast notification renderer that maps global toast state to positioned, animated, auto-dismissing toast elements.",
+      "tags": [
+        "ui-component",
+        "toast",
+        "notification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/components/sidebar/SearchBar.tsx:SearchBar",
+      "type": "function",
+      "name": "SearchBar",
+      "filePath": "client/src/components/sidebar/SearchBar.tsx",
+      "lineRange": [
+        5,
+        58
+      ],
+      "summary": "Search bar with Ctrl+K focus shortcut, debounced API search via setTimeout, and keyboard navigation support.",
+      "tags": [
+        "react-component",
+        "search",
+        "debounce"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/sidebar/SessionList.tsx:SessionList",
+      "type": "function",
+      "name": "SessionList",
+      "filePath": "client/src/components/sidebar/SessionList.tsx",
+      "lineRange": [
+        17,
+        60
+      ],
+      "summary": "Session list component rendering sessions grouped by project with click-selection and right-click context menu handler props.",
+      "tags": [
+        "react-component",
+        "session-list",
+        "grouped-list"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/context/AppContext.tsx:loadSettings",
+      "type": "function",
+      "name": "loadSettings",
+      "filePath": "client/src/context/AppContext.tsx",
+      "lineRange": [
+        72,
+        85
+      ],
+      "summary": "Loads persisted application settings from localStorage with JSON parsing and error handling, returning defaults on failure.",
+      "tags": [
+        "utility",
+        "localstorage",
+        "persistence"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:client/src/context/AppContext.tsx:reducer",
+      "type": "function",
+      "name": "reducer",
+      "filePath": "client/src/context/AppContext.tsx",
+      "lineRange": [
+        114,
+        197
+      ],
+      "summary": "Central reducer handling all state transitions for settings, projects, sessions, search results, favorites, and toast notifications.",
+      "tags": [
+        "reducer",
+        "state-management",
+        "dispatch"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:client/src/context/AppContext.tsx:AppProvider",
+      "type": "function",
+      "name": "AppProvider",
+      "filePath": "client/src/context/AppContext.tsx",
+      "lineRange": [
+        207,
+        221
+      ],
+      "summary": "Context provider that initializes reducer state with persisted settings, manages dispatch, and provides a showToast callback through context.",
+      "tags": [
+        "react-context",
+        "provider",
+        "state-management"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "function",
+      "name": "useAppState",
+      "filePath": "client/src/context/AppContext.tsx",
+      "lineRange": [
+        223,
+        227
+      ],
+      "summary": "Custom hook that consumes AppContext to provide state and dispatch to any descendant component.",
+      "tags": [
+        "react-hook",
+        "context-consumer",
+        "state-access"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "client/index.html",
+      "summary": "HTML entry point for the Tauri webview that loads the React application from /src/main.tsx with dark mode theme classes.",
+      "tags": [
+        "entry-point",
+        "html",
+        "webview",
+        "bootstrap"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:client/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "client/package.json",
+      "summary": "Node.js package configuration for the React client, defining Vite-based build scripts, runtime dependencies (React 18, Tailwind, react-markdown), and dev tooling (TypeScript, PostCSS, Vite).",
+      "tags": [
+        "configuration",
+        "dependencies",
+        "build-system",
+        "vite"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:client/tsconfig.json",
+      "type": "config",
+      "name": "tsconfig.json",
+      "filePath": "client/tsconfig.json",
+      "summary": "TypeScript compiler configuration targeting ES2022 with bundler module resolution, React JSX support, strict mode enabled, and source files included from the src directory.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "strict"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Ignore-pattern file for the Understand-Anything analysis tool, listing files and directories to exclude from code analysis with gitignore-style glob syntax.",
+      "tags": [
+        "configuration",
+        "analysis",
+        "ignore-patterns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/postcss.config.js",
+      "type": "file",
+      "name": "postcss.config.js",
+      "filePath": "client/postcss.config.js",
+      "summary": "PostCSS configuration enabling Tailwind CSS and Autoprefixer plugins for the frontend build pipeline.",
+      "tags": [
+        "configuration",
+        "build-system",
+        "css",
+        "postcss"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/src/components/shared/InlineEdit.tsx",
+      "type": "file",
+      "name": "InlineEdit.tsx",
+      "filePath": "client/src/components/shared/InlineEdit.tsx",
+      "summary": "React component providing inline text editing with save/cancel UX via Enter/Escape key navigation, used for renaming UI items in-place.",
+      "tags": [
+        "component",
+        "ui",
+        "editing",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client/src/components/shared/InlineEdit.tsx:InlineEdit",
+      "type": "function",
+      "name": "InlineEdit",
+      "filePath": "client/src/components/shared/InlineEdit.tsx",
+      "lineRange": [
+        10,
+        70
+      ],
+      "summary": "Inline text editing component that toggles between display and input modes with auto-focus, select-all on activate, and save-on-Enter / cancel-on-Escape keyboard handling.",
+      "tags": [
+        "component",
+        "inline-editing",
+        "ux",
+        "react"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:client/src/index.css",
+      "type": "file",
+      "name": "index.css",
+      "filePath": "client/src/index.css",
+      "summary": "Global stylesheet defining CSS custom properties (design tokens for 6 themes), Tailwind layers, @fontsource font-face declarations, and custom component utility classes.",
+      "tags": [
+        "styling",
+        "theming",
+        "css",
+        "design-tokens",
+        "tailwind"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:client/tailwind.config.ts",
+      "type": "file",
+      "name": "tailwind.config.ts",
+      "filePath": "client/tailwind.config.ts",
+      "summary": "Tailwind CSS configuration extending typography defaults for prose rendering, enabling class-based dark mode, and registering the @tailwindcss/typography plugin.",
+      "tags": [
+        "configuration",
+        "tailwind",
+        "styling",
+        "design-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client/vite.config.ts",
+      "type": "file",
+      "name": "vite.config.ts",
+      "filePath": "client/vite.config.ts",
+      "summary": "Vite build configuration for the React frontend with the React plugin and an API proxy forwarding /api requests to the Express backend on localhost:3001.",
+      "tags": [
+        "configuration",
+        "build-system",
+        "vite",
+        "dev-server"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Root monorepo package manifest defining the cc-history-viewer workspace (server + client), orchestrated dev/build scripts via concurrently, and esbuild-based server bundling.",
+      "tags": [
+        "configuration",
+        "monorepo",
+        "entry-point",
+        "build-system"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Project overview documentation covering features (themes, fonts, search, export), architecture (Tauri/Express/React layers), project structure, prerequisites, quick-start, build instructions, and tech stack.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "overview",
+        "getting-started"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/bundle-server.mjs",
+      "type": "file",
+      "name": "bundle-server.mjs",
+      "filePath": "scripts/bundle-server.mjs",
+      "summary": "Build script using esbuild to bundle the Express server TypeScript source into a single CommonJS file at dist-server/index.js for production deployment inside the Tauri app.",
+      "tags": [
+        "build-system",
+        "script",
+        "bundling",
+        "deployment",
+        "esbuild"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:server/package.json",
+      "type": "config",
+      "name": "server/package.json",
+      "filePath": "server/package.json",
+      "summary": "Server workspace package manifest declaring Express, CORS, and Tauri API runtime dependencies plus TypeScript, tsx, and esbuild dev tooling for the backend.",
+      "tags": [
+        "configuration",
+        "server",
+        "dependencies",
+        "nodejs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:server/tsconfig.json",
+      "type": "config",
+      "name": "server/tsconfig.json",
+      "filePath": "server/tsconfig.json",
+      "summary": "TypeScript compiler configuration for the Express server targeting ES2022 with strict mode, bundler module resolution, and output rooted at server/src.",
+      "tags": [
+        "configuration",
+        "typescript",
+        "build-system",
+        "server"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src-tauri/build.rs",
+      "type": "file",
+      "name": "build.rs",
+      "filePath": "src-tauri/build.rs",
+      "summary": "Tauri build script hook that invokes tauri_build::build() at compile time to generate platform-specific resources and linker flags for the native desktop shell.",
+      "tags": [
+        "build-system",
+        "tauri",
+        "rust",
+        "build-script"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:src-tauri/capabilities/default.json",
+      "type": "config",
+      "name": "default.json",
+      "filePath": "src-tauri/capabilities/default.json",
+      "summary": "Tauri v2 capabilities manifest granting the main window core default permissions for IPC and system access in the desktop application.",
+      "tags": [
+        "configuration",
+        "security",
+        "tauri",
+        "permissions"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:src-tauri/Cargo.toml",
+      "type": "config",
+      "name": "Cargo.toml",
+      "filePath": "src-tauri/Cargo.toml",
+      "summary": "Rust crate manifest for the Tauri desktop shell defining the app_lib library target with Tauri v2, tauri-plugin-log, and Serde JSON dependencies.",
+      "tags": [
+        "configuration",
+        "rust",
+        "tauri",
+        "dependencies"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src-tauri/icons/icon.icns",
+      "type": "file",
+      "name": "icon.icns",
+      "filePath": "src-tauri/icons/icon.icns",
+      "summary": "macOS application icon in Apple ICNS format used by the Tauri bundler when building the desktop app for macOS targets.",
+      "tags": [
+        "asset",
+        "icon",
+        "macos",
+        "desktop"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src-tauri/src/lib.rs",
+      "type": "file",
+      "name": "lib.rs",
+      "filePath": "src-tauri/src/lib.rs",
+      "summary": "Core Tauri library that manages the Express server lifecycle (spawn, health-check on port 3001, cleanup on drop) and creates the native WebView2 window pointing to the localhost frontend.",
+      "tags": [
+        "entry-point",
+        "tauri",
+        "server-management",
+        "desktop",
+        "rust"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses Rust's Mutex<Option<Child>> pattern to share child process handle across Tauri's managed state, with platform-conditional console hiding via cfg(windows)."
+    },
+    {
+      "id": "function:src-tauri/src/lib.rs:spawn_server",
+      "type": "function",
+      "name": "spawn_server",
+      "filePath": "src-tauri/src/lib.rs",
+      "lineRange": [
+        43,
+        84
+      ],
+      "summary": "Searches for the bundled server.js across development and production install paths, spawns a hidden Node.js child process, and blocks until the server responds on port 3001.",
+      "tags": [
+        "server-spawning",
+        "process-management",
+        "child-process",
+        "health-check"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src-tauri/src/lib.rs:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "src-tauri/src/lib.rs",
+      "lineRange": [
+        87,
+        118
+      ],
+      "summary": "Tauri application entry point that initializes the logging plugin, spawns the Express server via spawn_server, stores the child handle in managed state, and creates a native window (1200x800, titled 'Claude Code History') pointing at http://localhost:3001.",
+      "tags": [
+        "entry-point",
+        "tauri",
+        "application",
+        "window-creation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src-tauri/src/main.rs",
+      "type": "file",
+      "name": "main.rs",
+      "filePath": "src-tauri/src/main.rs",
+      "summary": "Rust binary entry point that suppresses the console window on Windows release builds via cfg_attr and delegates to app_lib::run() to start the Tauri application.",
+      "tags": [
+        "entry-point",
+        "binary",
+        "tauri",
+        "rust"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:src-tauri/tauri.conf.json",
+      "type": "config",
+      "name": "tauri.conf.json",
+      "filePath": "src-tauri/tauri.conf.json",
+      "summary": "Tauri v2 application configuration defining product metadata, build orchestration commands, restrictive CSP security policy, and bundle settings (icons, embedded dist-server and client resources).",
+      "tags": [
+        "configuration",
+        "tauri",
+        "desktop",
+        "build-system",
+        "security"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/middleware/errorHandler.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/routes/projects.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/routes/search.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/routes/sessions.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "file:server/src/routes/transcript.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/routes/transcript.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/routes/transcript.ts",
+      "target": "file:server/src/services/sessionMetadata.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "file:server/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "file:server/src/services/pathEncoder.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "file:server/src/services/sessionMetadata.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "file:server/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/sessionDelete.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "file:server/src/config.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "file:server/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "function:server/src/index.ts:serveClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/index.ts",
+      "target": "function:server/src/index.ts:findClientDist",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/middleware/errorHandler.ts",
+      "target": "function:server/src/middleware/errorHandler.ts:errorHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "function:server/src/services/historyReader.ts:readHistory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "function:server/src/services/historyReader.ts:search",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:encodePath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:decodePath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:getShortName",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:buildPathMap",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:scanProjects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:getProjectSessions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:readSessionMeta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:readCwdFromSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/sessionDelete.ts",
+      "target": "function:server/src/services/sessionDelete.ts:deleteSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/sessionDelete.ts",
+      "target": "function:server/src/services/sessionDelete.ts:filterHistoryFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:readMeta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:writeMeta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:updateMeta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:readTranscript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:parseTranscriptFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:normalizeEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:associateToolResults",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:loadSubagents",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server/src/middleware/errorHandler.ts",
+      "target": "function:server/src/middleware/errorHandler.ts:errorHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "function:server/src/services/historyReader.ts:readHistory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/historyReader.ts",
+      "target": "function:server/src/services/historyReader.ts:search",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:encodePath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:decodePath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/pathEncoder.ts",
+      "target": "function:server/src/services/pathEncoder.ts:getShortName",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:scanProjects",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/projectScanner.ts",
+      "target": "function:server/src/services/projectScanner.ts:getProjectSessions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/sessionDelete.ts",
+      "target": "function:server/src/services/sessionDelete.ts:deleteSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:readMeta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:writeMeta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/sessionMetadata.ts",
+      "target": "function:server/src/services/sessionMetadata.ts:updateMeta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/services/transcriptReader.ts",
+      "target": "function:server/src/services/transcriptReader.ts:readTranscript",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:server/src/services/projectScanner.ts:buildPathMap",
+      "target": "function:server/src/services/pathEncoder.ts:encodePath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:server/src/services/projectScanner.ts:scanProjects",
+      "target": "function:server/src/services/pathEncoder.ts:decodePath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:server/src/services/projectScanner.ts:getProjectSessions",
+      "target": "function:server/src/services/sessionMetadata.ts:readMeta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:server/src/routes/projects.ts",
+      "target": "file:server/src/services/projectScanner.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/routes/search.ts",
+      "target": "file:server/src/services/historyReader.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/routes/sessions.ts",
+      "target": "file:server/src/services/projectScanner.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/routes/transcript.ts",
+      "target": "file:server/src/services/transcriptReader.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/routes/transcript.ts",
+      "target": "file:server/src/services/sessionDelete.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/config.ts",
+      "target": "file:server/src/index.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:server/src/config.ts",
+      "target": "file:server/src/routes/transcript.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/TextBlock.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/shared/CopyButton.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/utils/dateFormat.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/components/chat/MessageBubble.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/components/shared/FilterBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/utils/exportMarkdown.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/AssistantMessage.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/SystemEvent.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/UserMessage.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/SystemEvent.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "file:client/src/components/shared/CopyButton.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "file:client/src/utils/dateFormat.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/shared/FilterBar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/shared/FilterBar.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/utils/exportMarkdown.ts",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "function:client/src/components/chat/AssistantMessage.tsx:AssistantMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "function:client/src/components/chat/AssistantMessage.tsx:BlockRenderer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "function:client/src/components/chat/ChatWindow.tsx:ChatWindow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "function:client/src/components/chat/MessageBubble.tsx:MessageBubble",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/SystemEvent.tsx",
+      "target": "function:client/src/components/chat/SystemEvent.tsx:SystemEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/TextBlock.tsx",
+      "target": "function:client/src/components/chat/TextBlock.tsx:TextBlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "target": "function:client/src/components/chat/ThinkingBlock.tsx:ThinkingBlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "target": "function:client/src/components/chat/ToolCallBlock.tsx:ToolCallBlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "function:client/src/components/chat/UserMessage.tsx:UserMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/CopyButton.tsx",
+      "target": "function:client/src/components/shared/CopyButton.tsx:CopyButton",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/FilterBar.tsx",
+      "target": "function:client/src/components/shared/FilterBar.tsx:FilterBar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/utils/dateFormat.ts",
+      "target": "function:client/src/utils/dateFormat.ts:formatDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/utils/dateFormat.ts",
+      "target": "function:client/src/utils/dateFormat.ts:formatFullDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/utils/exportMarkdown.ts",
+      "target": "function:client/src/utils/exportMarkdown.ts:eventsToMarkdown",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/utils/exportMarkdown.ts",
+      "target": "function:client/src/utils/exportMarkdown.ts:downloadMarkdown",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "function:client/src/components/chat/AssistantMessage.tsx:AssistantMessage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "function:client/src/components/chat/ChatWindow.tsx:ChatWindow",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "function:client/src/components/chat/MessageBubble.tsx:MessageBubble",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/SystemEvent.tsx",
+      "target": "function:client/src/components/chat/SystemEvent.tsx:SystemEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/TextBlock.tsx",
+      "target": "function:client/src/components/chat/TextBlock.tsx:TextBlock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "target": "function:client/src/components/chat/ThinkingBlock.tsx:ThinkingBlock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "target": "function:client/src/components/chat/ToolCallBlock.tsx:ToolCallBlock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "function:client/src/components/chat/UserMessage.tsx:UserMessage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/shared/CopyButton.tsx",
+      "target": "function:client/src/components/shared/CopyButton.tsx:CopyButton",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/shared/FilterBar.tsx",
+      "target": "function:client/src/components/shared/FilterBar.tsx:FilterBar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/utils/dateFormat.ts",
+      "target": "function:client/src/utils/dateFormat.ts:formatDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/utils/dateFormat.ts",
+      "target": "function:client/src/utils/dateFormat.ts:formatFullDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/utils/exportMarkdown.ts",
+      "target": "function:client/src/utils/exportMarkdown.ts:eventsToMarkdown",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/utils/exportMarkdown.ts",
+      "target": "function:client/src/utils/exportMarkdown.ts:downloadMarkdown",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/AssistantMessage.tsx:AssistantMessage",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/AssistantMessage.tsx:AssistantMessage",
+      "target": "function:client/src/utils/dateFormat.ts:formatDate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/ChatWindow.tsx:ChatWindow",
+      "target": "file:client/src/api/client.ts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/ChatWindow.tsx:ChatWindow",
+      "target": "function:client/src/utils/exportMarkdown.ts:downloadMarkdown",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/MessageBubble.tsx:MessageBubble",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/UserMessage.tsx:UserMessage",
+      "target": "function:client/src/utils/dateFormat.ts:formatDate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/ThinkingBlock.tsx:ThinkingBlock",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/chat/ToolCallBlock.tsx:ToolCallBlock",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/components/shared/FilterBar.tsx:FilterBar",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client/src/utils/exportMarkdown.ts:downloadMarkdown",
+      "target": "function:client/src/utils/exportMarkdown.ts:eventsToMarkdown",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/components/chat/MessageBubble.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/components/shared/FilterBar.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/AssistantMessage.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/SystemEvent.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/components/chat/UserMessage.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/TextBlock.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/components/shared/CopyButton.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/UserMessage.tsx",
+      "target": "file:client/src/components/shared/CopyButton.tsx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/chat/AssistantMessage.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/chat/ChatWindow.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/chat/MessageBubble.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/chat/ThinkingBlock.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/chat/ToolCallBlock.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/shared/FilterBar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/App.tsx",
+      "target": "file:client/src/components/layout/Shell.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/App.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/MainPanel.tsx",
+      "target": "file:client/src/components/chat/ChatWindow.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/MainPanel.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/components/layout/MainPanel.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/components/layout/Sidebar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/components/shared/SettingsPanel.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/components/shared/Toast.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/components/shared/ContextMenu.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/components/sidebar/SearchBar.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/components/sidebar/SessionList.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/shared/SettingsPanel.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/shared/Toast.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "file:client/src/types/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/main.tsx",
+      "target": "file:client/src/App.tsx",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/main.tsx",
+      "target": "file:client/src/index.css",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:client/src/App.tsx",
+      "target": "function:client/src/App.tsx:App",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/layout/MainPanel.tsx",
+      "target": "function:client/src/components/layout/MainPanel.tsx:MainPanel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "function:client/src/components/layout/Shell.tsx:Shell",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "function:client/src/components/layout/Sidebar.tsx:Sidebar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "function:client/src/components/layout/Sidebar.tsx:groupByProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/ContextMenu.tsx",
+      "target": "function:client/src/components/shared/ContextMenu.tsx:ContextMenu",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/SettingsPanel.tsx",
+      "target": "function:client/src/components/shared/SettingsPanel.tsx:SettingsPanel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/Toast.tsx",
+      "target": "function:client/src/components/shared/Toast.tsx:ToastContainer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "function:client/src/components/sidebar/SearchBar.tsx:SearchBar",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/sidebar/SessionList.tsx",
+      "target": "function:client/src/components/sidebar/SessionList.tsx:SessionList",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:loadSettings",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:reducer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:AppProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/App.tsx",
+      "target": "function:client/src/App.tsx:App",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/layout/MainPanel.tsx",
+      "target": "function:client/src/components/layout/MainPanel.tsx:MainPanel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "function:client/src/components/layout/Shell.tsx:Shell",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "function:client/src/components/layout/Sidebar.tsx:Sidebar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/shared/ContextMenu.tsx",
+      "target": "function:client/src/components/shared/ContextMenu.tsx:ContextMenu",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/shared/SettingsPanel.tsx",
+      "target": "function:client/src/components/shared/SettingsPanel.tsx:SettingsPanel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/shared/Toast.tsx",
+      "target": "function:client/src/components/shared/Toast.tsx:ToastContainer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "function:client/src/components/sidebar/SearchBar.tsx:SearchBar",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/sidebar/SessionList.tsx",
+      "target": "function:client/src/components/sidebar/SessionList.tsx:SessionList",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:AppProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/context/AppContext.tsx",
+      "target": "function:client/src/context/AppContext.tsx:useAppState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client/src/components/layout/MainPanel.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/shared/SettingsPanel.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/shared/Toast.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "file:client/src/context/AppContext.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/layout/Shell.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/layout/Sidebar.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/sidebar/SearchBar.tsx",
+      "target": "file:client/src/api/client.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/index.html",
+      "target": "file:client/src/main.tsx",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:client/package.json",
+      "target": "file:client/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:client/package.json",
+      "target": "config:client/tsconfig.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:client/tsconfig.json",
+      "target": "file:client/src/main.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:client/tsconfig.json",
+      "target": "file:client/src/App.tsx",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/src/components/shared/InlineEdit.tsx",
+      "target": "function:client/src/components/shared/InlineEdit.tsx:InlineEdit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src-tauri/src/lib.rs",
+      "target": "function:src-tauri/src/lib.rs:spawn_server",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src-tauri/src/lib.rs",
+      "target": "function:src-tauri/src/lib.rs:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client/src/components/shared/InlineEdit.tsx",
+      "target": "function:client/src/components/shared/InlineEdit.tsx:InlineEdit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src-tauri/src/lib.rs",
+      "target": "function:src-tauri/src/lib.rs:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src-tauri/src/main.rs",
+      "target": "function:src-tauri/src/lib.rs:run",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src-tauri/src/lib.rs:run",
+      "target": "function:src-tauri/src/lib.rs:spawn_server",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:scripts/bundle-server.mjs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:client/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/tauri.conf.json",
+      "target": "file:src-tauri/src/lib.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/tauri.conf.json",
+      "target": "file:scripts/bundle-server.mjs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/tauri.conf.json",
+      "target": "file:client/vite.config.ts",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/Cargo.toml",
+      "target": "file:src-tauri/src/lib.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/Cargo.toml",
+      "target": "file:src-tauri/build.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src-tauri/capabilities/default.json",
+      "target": "file:src-tauri/src/lib.rs",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:src-tauri/src/lib.rs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:client/vite.config.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:client/tailwind.config.ts",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:scripts/bundle-server.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:client/postcss.config.js",
+      "target": "file:client/tailwind.config.ts",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src-tauri/src/lib.rs",
+      "target": "file:scripts/bundle-server.mjs",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/vite.config.ts",
+      "target": "config:server/package.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client/tailwind.config.ts",
+      "target": "file:client/src/index.css",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:src-tauri/tauri.conf.json",
+      "target": "file:src-tauri/icons/icon.icns",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src-tauri/build.rs",
+      "target": "file:src-tauri/src/lib.rs",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:api",
+      "name": "API 层",
+      "description": "HTTP API 路由处理器（Express）和客户端 API 调用模块，负责前后端之间的数据通信，包括项目列表、会话查询、转录读取、会话删除和全局搜索端点",
+      "nodeIds": [
+        "file:server/src/routes/projects.ts",
+        "file:server/src/routes/search.ts",
+        "file:server/src/routes/sessions.ts",
+        "file:server/src/routes/transcript.ts",
+        "file:client/src/api/client.ts"
+      ]
+    },
+    {
+      "id": "layer:service",
+      "name": "服务层",
+      "description": "服务端核心业务逻辑，包括 Claude Code 历史文件读取与搜索、项目扫描与会话发现、转录 JSONL 解析与事件规范化、会话元数据管理和会话删除，以及 Express 错误处理中间件",
+      "nodeIds": [
+        "file:server/src/services/historyReader.ts",
+        "file:server/src/services/pathEncoder.ts",
+        "file:server/src/services/projectScanner.ts",
+        "file:server/src/services/sessionDelete.ts",
+        "file:server/src/services/sessionMetadata.ts",
+        "file:server/src/services/transcriptReader.ts",
+        "file:server/src/middleware/errorHandler.ts"
+      ]
+    },
+    {
+      "id": "layer:ui",
+      "name": "UI 层",
+      "description": "React 聊天查看器界面组件，包括消息气泡路由、助手消息渲染（含可折叠思考块、工具调用和 Markdown 文本块）、系统事件和用户消息展示、布局外壳与侧边栏导航、搜索栏、会话列表，以及 CopyButton、FilterBar、ContextMenu、SettingsPanel、Toast、InlineEdit 等可复用 UI 原语",
+      "nodeIds": [
+        "file:client/src/components/chat/AssistantMessage.tsx",
+        "file:client/src/components/chat/ChatWindow.tsx",
+        "file:client/src/components/chat/MessageBubble.tsx",
+        "file:client/src/components/chat/SystemEvent.tsx",
+        "file:client/src/components/chat/TextBlock.tsx",
+        "file:client/src/components/chat/ThinkingBlock.tsx",
+        "file:client/src/components/chat/ToolCallBlock.tsx",
+        "file:client/src/components/chat/UserMessage.tsx",
+        "file:client/src/components/layout/MainPanel.tsx",
+        "file:client/src/components/layout/Shell.tsx",
+        "file:client/src/components/layout/Sidebar.tsx",
+        "file:client/src/components/shared/CopyButton.tsx",
+        "file:client/src/components/shared/FilterBar.tsx",
+        "file:client/src/components/shared/ContextMenu.tsx",
+        "file:client/src/components/shared/SettingsPanel.tsx",
+        "file:client/src/components/shared/Toast.tsx",
+        "file:client/src/components/shared/InlineEdit.tsx",
+        "file:client/src/components/sidebar/SearchBar.tsx",
+        "file:client/src/components/sidebar/SessionList.tsx"
+      ]
+    },
+    {
+      "id": "layer:state",
+      "name": "应用外壳与状态层",
+      "description": "React 应用启动引导和全局状态管理，通过 Context + useReducer 结合 localStorage 持久化实现设置、项目、会话、搜索结果和 Toast 通知的集中管理，包含根组件、DOM 挂载点和全局样式（含 6 套主题的 CSS 自定义属性）",
+      "nodeIds": [
+        "file:client/src/context/AppContext.tsx",
+        "file:client/src/App.tsx",
+        "file:client/src/main.tsx",
+        "file:client/src/index.css"
+      ]
+    },
+    {
+      "id": "layer:types",
+      "name": "类型层",
+      "description": "前后端共享的 TypeScript 类型定义和领域模型接口，包括会话事件、项目摘要、转录响应、内容块、搜索结果的类型声明",
+      "nodeIds": [
+        "file:server/src/types/index.ts",
+        "file:client/src/types/index.ts"
+      ]
+    },
+    {
+      "id": "layer:utility",
+      "name": "工具层",
+      "description": "客户端纯工具函数，包括基于 ISO 时间戳的相对日期格式化（今天/昨天/N 天前）和会话对话的 Markdown 导出与文件下载",
+      "nodeIds": [
+        "file:client/src/utils/dateFormat.ts",
+        "file:client/src/utils/exportMarkdown.ts"
+      ]
+    },
+    {
+      "id": "layer:infrastructure",
+      "name": "基础设施层",
+      "description": "Tauri v2 原生桌面外壳（Rust），管理 Express 服务端进程的生命周期（启动、健康检查、退出清理）并创建指向本地前端开发服务器的 WebView2 窗口；包含 Rust 入口点、编译构建脚本、应用图标资源以及 esbuild 服务端打包脚本",
+      "nodeIds": [
+        "file:src-tauri/src/lib.rs",
+        "file:src-tauri/src/main.rs",
+        "file:src-tauri/build.rs",
+        "file:src-tauri/icons/icon.icns",
+        "file:scripts/bundle-server.mjs"
+      ]
+    },
+    {
+      "id": "layer:config",
+      "name": "配置层",
+      "description": "项目清单与构建工具配置（含 monorepo 工作区、Vite 与 esbuild 打包、Tailwind CSS 与 PostCSS、TypeScript 编译选项），Tauri 应用设置与安全权限清单，Express 服务端启动组装与环境常量，WebView HTML 入口，以及项目 README 文档",
+      "nodeIds": [
+        "file:server/src/config.ts",
+        "file:server/src/index.ts",
+        "file:client/index.html",
+        "config:client/package.json",
+        "config:client/tsconfig.json",
+        "file:client/postcss.config.js",
+        "file:client/tailwind.config.ts",
+        "file:client/vite.config.ts",
+        "config:package.json",
+        "document:README.md",
+        "config:server/package.json",
+        "config:server/tsconfig.json",
+        "config:src-tauri/Cargo.toml",
+        "config:src-tauri/tauri.conf.json",
+        "config:src-tauri/capabilities/default.json",
+        "file:.understand-anything/.understandignore"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "The README provides a high-level map of the entire application: a Tauri v2 desktop shell that spawns a hidden Node.js Express server and opens a React frontend in a WebView2 window. It documents the three architectural layers, features (themes, search, markdown export), and the tech stack you will encounter throughout this tour.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Express Server Entry Point",
+      "description": "The server entry point bootstraps the Express application by configuring CORS, JSON body parsing, mounting all API routes under /api, and serving the compiled React frontend as static files. In standalone mode, it also auto-opens the browser. This file is the nerve center that wires together every server-side concern.",
+      "nodeIds": [
+        "file:server/src/index.ts"
+      ],
+      "languageLesson": "Express apps compose middleware and route handlers via app.use(). The order matters: CORS and body parsing must come before routes, and the error handler must be registered last to catch errors from all preceding middleware."
+    },
+    {
+      "order": 3,
+      "title": "Server Configuration and Error Handling",
+      "description": "Server-wide constants resolve the Claude home directory (~/.claude) and the HTTP port from environment variables with sensible defaults. The error-handling middleware sits at the end of the Express pipeline, logging errors to stderr and returning structured JSON responses. Together, these two modules provide the operational foundation every route handler depends on.",
+      "nodeIds": [
+        "file:server/src/config.ts",
+        "file:server/src/middleware/errorHandler.ts"
+      ],
+      "languageLesson": "Express error-handling middleware is identified by its four-parameter signature (err, req, res, next). It must be registered after all other middleware and routes, because Express calls error handlers only when next(err) is invoked or an error is thrown synchronously."
+    },
+    {
+      "order": 4,
+      "title": "Server Type Definitions",
+      "description": "The server's TypeScript types define the domain model vocabulary used throughout the backend: HistoryEntry, ProjectSummary, SessionSummary, NormalizedEvent with its ContentBlocks, TranscriptResponse, and SearchResult. These interfaces form the contract between the data-reading services and the API routes, ensuring type safety from file parsing through HTTP response.",
+      "nodeIds": [
+        "file:server/src/types/index.ts"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "REST API Routes",
+      "description": "Four route modules expose the backend's capabilities over HTTP. The /api/projects, /api/projects/:projectId/sessions, and /api/search endpoints delegate to service-layer functions via dynamic imports. The /api/transcript route is the richest, supporting GET (read transcript), PATCH (update metadata like customTitle), and DELETE (remove a session and its JSONL file). Each route acts as a thin translation layer between HTTP and the business logic in the services.",
+      "nodeIds": [
+        "file:server/src/routes/projects.ts",
+        "file:server/src/routes/sessions.ts",
+        "file:server/src/routes/search.ts",
+        "file:server/src/routes/transcript.ts"
+      ],
+      "languageLesson": "Express route handlers receive (req, res, next). Route parameters like :projectId are accessed via req.params. Dynamic imports (import() in the route body) can defer module loading until the endpoint is actually called, improving cold-start time for rarely-used endpoints."
+    },
+    {
+      "order": 6,
+      "title": "Core Business Services",
+      "description": "These services form the engine that reads and interprets Claude Code's data. historyReader parses the shared ~/.claude/history.jsonl file and provides search and filtering. projectScanner discovers projects and sessions by resolving file-system paths to project directories and reading per-session metadata. transcriptReader parses individual JSONL transcript files, normalizes events, associates tool results with their invocations, and resolves sub-agent sessions. pathEncoder handles the tricky problem of Windows drive-letter paths, encoding them as filesystem-safe identifiers.",
+      "nodeIds": [
+        "file:server/src/services/historyReader.ts",
+        "file:server/src/services/projectScanner.ts",
+        "file:server/src/services/transcriptReader.ts",
+        "file:server/src/services/pathEncoder.ts"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Session Metadata and Deletion",
+      "description": "Building on the project scanner from Step 6, sessionMetadata manages per-session JSON files stored alongside transcripts, supporting read, write, and partial updates for fields like customTitle and starred — enabling the rename and favorite features visible in the UI. sessionDelete removes a session by deleting its transcript and metadata files, then rewriting the shared history.jsonl to exclude the deleted session's entries, keeping the history file consistent.",
+      "nodeIds": [
+        "file:server/src/services/sessionMetadata.ts",
+        "file:server/src/services/sessionDelete.ts"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Client Entry Point and HTML Shell",
+      "description": "The React application boots from main.tsx, which renders the root App component into the DOM within React StrictMode and imports the global stylesheet. The index.html is the WebView2's entry point, pre-applying dark mode theme classes so there is no flash of unstyled content when the Tauri window opens. The App component wraps the Shell layout in AppProvider, establishing the global state context before any UI renders.",
+      "nodeIds": [
+        "file:client/src/main.tsx",
+        "file:client/src/App.tsx",
+        "file:client/index.html"
+      ],
+      "languageLesson": "React StrictMode is a development-only wrapper that double-invokes certain lifecycle methods to surface side-effect bugs. It does not affect production builds but helps catch impure renders during development."
+    },
+    {
+      "order": 9,
+      "title": "Global State Management and Client Types",
+      "description": "AppContext is the most depended-upon module in the entire codebase (fan-in of 25), serving as the central nervous system of the frontend. It uses React Context with useReducer for state management and persists settings, projects, sessions, search results, and toast notifications to localStorage. The client types mirror the server's domain model (Project, Session, NormalizedEvent, ContentBlock) and include the DEFAULT_FILTERS constant that controls which event types are visible by default.",
+      "nodeIds": [
+        "file:client/src/context/AppContext.tsx",
+        "file:client/src/types/index.ts"
+      ],
+      "languageLesson": "The combination of React Context + useReducer is a lightweight alternative to Redux or Zustand. The reducer function centralizes all state transitions as pure functions of (state, action) -> state, making the app's state changes predictable and debuggable. localStorage persistence on every state change ensures settings survive page refreshes."
+    },
+    {
+      "order": 10,
+      "title": "API Client Module",
+      "description": "The API client provides typed fetch helpers that all frontend components use to communicate with the Express backend from Step 2. It encapsulates endpoint methods for listing projects, fetching sessions, reading transcripts, updating metadata, deleting sessions, and performing full-text search. With a fan-in of 7, it is consumed by Shell, Sidebar, SearchBar, and ChatWindow — every component that needs server data.",
+      "nodeIds": [
+        "file:client/src/api/client.ts"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "Application Shell and Layout",
+      "description": "The Shell component is the top-level layout controller (fan-out of 8), implementing keyboard shortcuts for session rename/delete and theme toggling, and orchestrating a two-panel layout with Sidebar and MainPanel. Sidebar manages project selection, session listing with inline rename and starring, and right-click context menus. MainPanel renders the ChatWindow for the currently selected session. Together, these three components define the spatial structure of the entire application window.",
+      "nodeIds": [
+        "file:client/src/components/layout/Shell.tsx",
+        "file:client/src/components/layout/Sidebar.tsx",
+        "file:client/src/components/layout/MainPanel.tsx"
+      ]
+    },
+    {
+      "order": 12,
+      "title": "Chat Rendering Core",
+      "description": "ChatWindow is the main chat view (fan-out of 9) that fetches transcript events from the API, applies visibility filters, provides markdown export, and supports session deletion. MessageBubble acts as a router, dispatching each event to AssistantMessage, SystemEvent, or UserMessage based on the event's role field. AssistantMessage (fan-out of 12) orchestrates the richest rendering path, composing TextBlock, ThinkingBlock, and ToolCallBlock for different content types within a single assistant turn.",
+      "nodeIds": [
+        "file:client/src/components/chat/ChatWindow.tsx",
+        "file:client/src/components/chat/MessageBubble.tsx",
+        "file:client/src/components/chat/AssistantMessage.tsx",
+        "file:client/src/components/chat/TextBlock.tsx"
+      ],
+      "languageLesson": "The MessageBubble component demonstrates the strategy pattern in React: a single component inspects an event's role and delegates to a specialized renderer. This keeps the rendering logic for each message type isolated while presenting a uniform interface to the parent ChatWindow."
+    },
+    {
+      "order": 13,
+      "title": "Specialized Chat Blocks and Filtering",
+      "description": "ThinkingBlock renders the AI's reasoning process in a collapsible section with a toggleable expand/collapse UI and signature preview. ToolCallBlock extracts a human-readable summary from tool inputs and shows raw JSON on expand. UserMessage and SystemEvent render user messages and system-level notifications respectively. FilterBar provides toggle buttons that control which event types (user/assistant/system/thinking/tool) are visible, plus a reader mode that hides all non-conversation content for distraction-free reading.",
+      "nodeIds": [
+        "file:client/src/components/chat/ThinkingBlock.tsx",
+        "file:client/src/components/chat/ToolCallBlock.tsx",
+        "file:client/src/components/chat/UserMessage.tsx",
+        "file:client/src/components/chat/SystemEvent.tsx",
+        "file:client/src/components/shared/FilterBar.tsx"
+      ]
+    },
+    {
+      "order": 14,
+      "title": "Shared UI Primitives and Utilities",
+      "description": "Shared components provide reusable UI building blocks: CopyButton copies text to the clipboard with a visual confirmation, SettingsPanel offers a tabbed interface for theme, font, and size preferences (all persisted via AppContext), Toast renders auto-dismissing notifications, ContextMenu provides viewport-aware right-click menus, and InlineEdit enables in-place text editing. On the utility side, dateFormat provides relative time display (today/yesterday/N days ago) from ISO timestamps, and exportMarkdown converts conversation events into a downloadable Markdown file.",
+      "nodeIds": [
+        "file:client/src/components/shared/CopyButton.tsx",
+        "file:client/src/components/shared/SettingsPanel.tsx",
+        "file:client/src/components/shared/Toast.tsx",
+        "file:client/src/components/shared/ContextMenu.tsx",
+        "file:client/src/components/shared/InlineEdit.tsx",
+        "file:client/src/utils/dateFormat.ts",
+        "file:client/src/utils/exportMarkdown.ts"
+      ]
+    },
+    {
+      "order": 15,
+      "title": "Tauri Desktop Shell and Build Pipeline",
+      "description": "The final layer: the Rust-based Tauri v2 shell that wraps everything into a native Windows desktop app. main.rs suppresses the console window on release builds and delegates to lib.rs, which spawns the Node.js Express server as a child process, health-checks port 3001, and creates a WebView2 window pointing at the localhost frontend. The Tauri config orchestrates the full build: esbuild bundles the server into a single file, Vite builds the React client, and both are embedded as resources. The root package.json ties the monorepo together with concurrently for dev mode and a unified build command.",
+      "nodeIds": [
+        "file:src-tauri/src/main.rs",
+        "file:src-tauri/src/lib.rs",
+        "config:src-tauri/tauri.conf.json",
+        "config:package.json",
+        "file:scripts/bundle-server.mjs"
+      ],
+      "languageLesson": "Tauri v2 uses a Rust binary to create a lightweight native window (via the OS's webview) that hosts a web frontend. The tauri.conf.json controls the entire build pipeline via the 'beforeBuildCommand' and 'beforeDevCommand' fields, while the 'bundle.resources' field embeds the compiled server and client into the final executable. The Content Security Policy (CSP) in the config restricts which scripts and connections the webview allows, preventing XSS in the desktop context."
+    }
+  ]
+}
