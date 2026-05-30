@@ -5,6 +5,7 @@ import { Sidebar } from './Sidebar';
 import { MainPanel } from './MainPanel';
 import { SettingsPanel } from '../shared/SettingsPanel';
 import { ToastContainer } from '../shared/Toast';
+import { CommandPalette } from '../shared/CommandPalette';
 
 export function Shell() {
   const { state, dispatch, showToast } = useAppState();
@@ -127,6 +128,7 @@ export function Shell() {
       <Sidebar />
       <MainPanel />
       <SettingsPanel />
+      <CommandPalette />
       <ToastContainer />
     </div>
   );
