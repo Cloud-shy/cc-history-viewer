@@ -5,3 +5,5 @@ dist-server/
 *.exe
 src-tauri/target/
 .superpowers/
+.codegraph/
+docs/handoff/

@@ -93,7 +93,10 @@ function parseTranscriptFile(
         skipped++;
         return;
       }
-      if (events.length >= limit) return;
+      if (events.length >= limit) {
+        rl.close();
+        return;
+      }
 
       events.push(event);
     });

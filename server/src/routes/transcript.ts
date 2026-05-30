@@ -2,6 +2,7 @@ import { Router } from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import { CLAUDE_HOME } from '../config';
+import { updateMeta } from '../services/sessionMetadata';
 
 export const transcriptRouter = Router({ mergeParams: true });
 
@@ -17,6 +18,19 @@ transcriptRouter.get('/:projectId/:sessionId', async (req, res, next) => {
       { limit, offset, includeSubagents }
     );
     res.json(result);
+  } catch (err) {
+    next(err);
+  }
+});
+
+transcriptRouter.patch('/:projectId/:sessionId', async (req, res, next) => {
+  try {
+    const { title, starred } = req.body;
+    const patch: Record<string, unknown> = {};
+    if (typeof title === 'string') patch.customTitle = title;
+    if (typeof starred === 'boolean') patch.starred = starred;
+    const meta = updateMeta(req.params.projectId, req.params.sessionId, patch);
+    res.json({ ok: true, meta });
   } catch (err) {
     next(err);
   }

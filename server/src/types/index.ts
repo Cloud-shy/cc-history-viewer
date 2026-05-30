@@ -21,6 +21,7 @@ export interface SessionSummary {
   startedAt: string | null;
   lastActivityAt: string | null;
   gitBranch: string | null;
+  starred: boolean;
 }
 
 export interface NormalizedEvent {

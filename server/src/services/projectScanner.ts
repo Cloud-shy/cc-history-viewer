@@ -3,6 +3,7 @@ import path from 'node:path';
 import readline from 'node:readline';
 import { CLAUDE_HOME } from '../config';
 import { decodePath, encodePath } from './pathEncoder';
+import { readMeta } from './sessionMetadata';
 import type { ProjectSummary, SessionSummary } from '../types';
 
 const PROJECTS_DIR = path.join(CLAUDE_HOME, 'projects');
@@ -95,14 +96,16 @@ export async function getProjectSessions(projectId: string): Promise<SessionSumm
     const filePath = path.join(projectDir, entry.name);
 
     const meta = await readSessionMeta(filePath);
+    const userMeta = readMeta(projectId, sessionId);
     sessions.push({
       sessionId,
-      title: meta.title,
+      title: userMeta.customTitle || meta.title,
       firstPrompt: meta.firstPrompt,
       messageCount: meta.lineCount,
       startedAt: meta.startedAt,
       lastActivityAt: meta.lastActivityAt,
       gitBranch: meta.gitBranch,
+      starred: !!userMeta.starred,
     });
   }
 

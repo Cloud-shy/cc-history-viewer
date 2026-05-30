@@ -32,4 +32,14 @@ export const api = {
       `/sessions/${encodeURIComponent(projectId)}/${encodeURIComponent(sessionId)}`,
       { method: 'DELETE' }
     ),
+
+  updateSession: (projectId: string, sessionId: string, body: { title?: string; starred?: boolean }) =>
+    fetchJson<{ ok: boolean }>(
+      `/sessions/${encodeURIComponent(projectId)}/${encodeURIComponent(sessionId)}`,
+      {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      }
+    ),
 };
