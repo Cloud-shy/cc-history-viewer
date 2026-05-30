@@ -7,11 +7,14 @@ import { SystemEvent } from './SystemEvent';
 interface MessageBubbleProps {
   event: NormalizedEvent;
   index: number;
+  groupSize?: number;
 }
 
-export function MessageBubble({ event }: MessageBubbleProps) {
+export function MessageBubble({ event, groupSize }: MessageBubbleProps) {
   const { state } = useAppState();
   const { filters } = state;
+
+  const isGrouped = groupSize !== undefined && groupSize > 1;
 
   if (event.type === 'system') {
     if (!filters.showSystemEvents) return null;
@@ -19,11 +22,11 @@ export function MessageBubble({ event }: MessageBubbleProps) {
   }
 
   if (event.type === 'user') {
-    return <UserMessage event={event} />;
+    return <UserMessage event={event} compact={isGrouped} />;
   }
 
   if (event.type === 'assistant') {
-    return <AssistantMessage event={event} />;
+    return <AssistantMessage event={event} compact={isGrouped} />;
   }
 
   return null;

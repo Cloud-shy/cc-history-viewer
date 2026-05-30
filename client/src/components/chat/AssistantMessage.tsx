@@ -15,9 +15,10 @@ function extractText(blocks: ContentBlock[]): string {
 
 interface AssistantMessageProps {
   event: NormalizedEvent;
+  compact?: boolean;
 }
 
-export function AssistantMessage({ event }: AssistantMessageProps) {
+export function AssistantMessage({ event, compact }: AssistantMessageProps) {
   const { state } = useAppState();
   const { filters } = state;
 
@@ -50,15 +51,17 @@ export function AssistantMessage({ event }: AssistantMessageProps) {
             <BlockRenderer key={i} block={block} index={i} />
           ))}
         </div>
-        <div className="flex items-center gap-2 mt-1 ml-2 text-xs text-stone-400/60 dark:text-stone-500/60">
-          {event.timestamp && <span>{formatDate(event.timestamp)}</span>}
-          {event.model && <span className="opacity-60">{event.model}</span>}
-          {event.usage && (
-            <span className="opacity-60">
-              {event.usage.input_tokens}+{event.usage.output_tokens} tokens
-            </span>
-          )}
-        </div>
+        {!compact && (
+          <div className="flex items-center gap-2 mt-1 ml-2 text-xs text-stone-400/60 dark:text-stone-500/60">
+            {event.timestamp && <span>{formatDate(event.timestamp)}</span>}
+            {event.model && <span className="opacity-60">{event.model}</span>}
+            {event.usage && (
+              <span className="opacity-60">
+                {event.usage.input_tokens}+{event.usage.output_tokens} tokens
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
