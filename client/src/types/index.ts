@@ -13,6 +13,7 @@ export interface Session {
   startedAt: string | null;
   lastActivityAt: string | null;
   gitBranch: string | null;
+  starred: boolean;
 }
 
 export interface NormalizedEvent {
@@ -84,3 +85,5 @@ export const DEFAULT_FILTERS: FilterState = {
   showSystemEvents: true,
   readerMode: false,
 };
+
+export type SidebarState = 'expanded' | 'icons' | 'hidden';

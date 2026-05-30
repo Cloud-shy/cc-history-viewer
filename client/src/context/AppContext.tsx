@@ -1,5 +1,5 @@
-import { createContext, useContext, useReducer, useEffect, type Dispatch } from 'react';
-import type { Project, Session, SearchResult, FilterState } from '../types';
+import { createContext, useContext, useReducer, useEffect, useCallback, type Dispatch } from 'react';
+import type { Project, Session, SearchResult, FilterState, SidebarState } from '../types';
 import { DEFAULT_FILTERS } from '../types';
 
 export type ThemeName = 'forest' | 'aurora' | 'sunset' | 'ocean' | 'midnight' | 'moss';
@@ -13,6 +13,12 @@ interface SettingsState {
   expandThinkingByDefault: boolean;
   expandToolCallsByDefault: boolean;
   darkMode: boolean;
+}
+
+export interface Toast {
+  id: number;
+  message: string;
+  type: 'success' | 'error';
 }
 
 interface AppState {
@@ -30,6 +36,10 @@ interface AppState {
   filters: FilterState;
   settings: SettingsState;
   settingsOpen: boolean;
+  toasts: Toast[];
+  contextMenu: { x: number; y: number; projectId: string; sessionId: string; title: string | null } | null;
+  sidebarState: SidebarState;
+  commandPaletteOpen: boolean;
 }
 
 type Action =
@@ -51,7 +61,18 @@ type Action =
   | { type: 'SET_EXPAND_THINKING'; value: boolean }
   | { type: 'SET_EXPAND_TOOL_CALLS'; value: boolean }
   | { type: 'SET_DARK_MODE'; value: boolean }
-  | { type: 'TOGGLE_SETTINGS' };
+  | { type: 'TOGGLE_SETTINGS' }
+  | { type: 'RENAME_SESSION'; sessionId: string; title: string }
+  | { type: 'TOGGLE_STAR_SESSION'; sessionId: string }
+  | { type: 'SHOW_TOAST'; toast: Toast }
+  | { type: 'DISMISS_TOAST'; id: number }
+  | { type: 'SHOW_CONTEXT_MENU'; menu: { x: number; y: number; projectId: string; sessionId: string; title: string | null } }
+  | { type: 'HIDE_CONTEXT_MENU' }
+  | { type: 'SET_SIDEBAR_STATE'; state: SidebarState }
+  | { type: 'TOGGLE_COMMAND_PALETTE' }
+  | { type: 'CLOSE_COMMAND_PALETTE' };
+
+let toastIdCounter = 0;
 
 function loadSettings(): SettingsState {
   try {
@@ -91,6 +112,10 @@ const initialState: AppState = {
   filters: { ...DEFAULT_FILTERS },
   settings: saved,
   settingsOpen: false,
+  toasts: [],
+  contextMenu: null,
+  sidebarState: 'expanded' as SidebarState,
+  commandPaletteOpen: false,
 };
 
 function reducer(state: AppState, action: Action): AppState {
@@ -151,6 +176,34 @@ function reducer(state: AppState, action: Action): AppState {
       return { ...state, settings: { ...state.settings, darkMode: action.value } };
     case 'TOGGLE_SETTINGS':
       return { ...state, settingsOpen: !state.settingsOpen };
+    case 'RENAME_SESSION':
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.sessionId === action.sessionId ? { ...s, title: action.title } : s
+        ),
+      };
+    case 'TOGGLE_STAR_SESSION':
+      return {
+        ...state,
+        sessions: state.sessions.map((s) =>
+          s.sessionId === action.sessionId ? { ...s, starred: !s.starred } : s
+        ),
+      };
+    case 'SHOW_TOAST':
+      return { ...state, toasts: [...state.toasts, action.toast].slice(-5) };
+    case 'DISMISS_TOAST':
+      return { ...state, toasts: state.toasts.filter((t) => t.id !== action.id) };
+    case 'SHOW_CONTEXT_MENU':
+      return { ...state, contextMenu: action.menu };
+    case 'HIDE_CONTEXT_MENU':
+      return { ...state, contextMenu: null };
+    case 'SET_SIDEBAR_STATE':
+      return { ...state, sidebarState: action.state };
+    case 'TOGGLE_COMMAND_PALETTE':
+      return { ...state, commandPaletteOpen: !state.commandPaletteOpen };
+    case 'CLOSE_COMMAND_PALETTE':
+      return { ...state, commandPaletteOpen: false };
     default:
       return state;
   }
@@ -159,6 +212,7 @@ function reducer(state: AppState, action: Action): AppState {
 interface AppContextValue {
   state: AppState;
   dispatch: Dispatch<Action>;
+  showToast: (message: string, type?: 'success' | 'error') => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -170,7 +224,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     saveSettings(state.settings);
   }, [state.settings]);
 
-  return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
+  const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
+    const id = ++toastIdCounter;
+    dispatch({ type: 'SHOW_TOAST', toast: { id, message, type } });
+    setTimeout(() => dispatch({ type: 'DISMISS_TOAST', id }), 3000);
+  }, []);
+
+  return <AppContext.Provider value={{ state, dispatch, showToast }}>{children}</AppContext.Provider>;
 }
 
 export function useAppState(): AppContextValue {
