@@ -31,10 +31,12 @@ export function FilterBar() {
                 background: `linear-gradient(to right, var(--reader-from), var(--reader-to))`,
                 color: '#fff',
                 boxShadow: `0 4px 6px -1px var(--bubble-user-shadow)`,
+                transition: 'all var(--duration-fast) var(--ease-out)',
               }
             : {
                 backgroundColor: 'var(--reader-inactive-bg)',
                 color: 'var(--reader-inactive-text)',
+                transition: 'all var(--duration-fast) var(--ease-out)',
               }
         }
       >
@@ -52,6 +54,7 @@ export function FilterBar() {
             backgroundColor: filters[key] ? 'var(--filter-active-bg)' : 'transparent',
             color: filters[key] ? 'var(--filter-active-text)' : 'var(--filter-inactive-text)',
             fontWeight: filters[key] ? 500 : 400,
+            transition: 'all var(--duration-fast) var(--ease-out)',
           }}
         >
           <span className="hidden sm:inline">{label}</span>
