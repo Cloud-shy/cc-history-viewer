@@ -1,10 +1,12 @@
 // Prism syntax highlighting theme driven by CSS variables.
 // The actual color values are defined in index.css per theme + dark mode.
 
+import type { CSSProperties } from 'react';
+
 const cssVar = (name: string, fallback: string): string =>
   `var(--syntax-${name}, ${fallback})`;
 
-export const lightTheme = {
+export const lightTheme: Record<string, CSSProperties> = {
   'code[class*="language-"]': {
     fontFamily: 'var(--font-mono)',
     fontSize: '15px',
