@@ -10,6 +10,8 @@
 @import '@fontsource/geist-sans/400.css';
 @import '@fontsource/geist-sans/500.css';
 @import '@fontsource/geist-sans/600.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
 
 @tailwind base;
 @tailwind components;
@@ -577,6 +579,115 @@ html.theme-moss {
   --loading-color: #65a30d;
 }
 
+/* ---- Shared UI variables ---- */
+:root {
+  --star-color: #f59e0b;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', 'SF Mono', Menlo, monospace;
+  --toast-success-bg: rgba(240, 253, 244, 0.92);
+  --toast-success-border: #bbf7d0;
+  --toast-success-text: #166534;
+  --toast-error-bg: rgba(255, 241, 242, 0.92);
+  --toast-error-border: #fecdd3;
+  --toast-error-text: #9b1c1c;
+  --context-menu-bg: rgba(255, 255, 255, 0.94);
+  --context-menu-border: #e7e5e4;
+  --context-menu-text: #44403c;
+  --context-menu-hover-bg: rgba(0, 0, 0, 0.04);
+  --danger-text: #e11d48;
+  --danger-hover-bg: rgba(225, 29, 72, 0.08);
+  --inline-edit-bg: rgba(255, 255, 255, 0.9);
+  --inline-edit-border: #d6d3d1;
+  --inline-edit-text: #44403c;
+}
+
+/* ---- Motion tokens ---- */
+:root {
+  --duration-fast: 150ms;
+  --duration-normal: 240ms;
+  --duration-slow: 350ms;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* ---- Z-index scale ---- */
+:root {
+  --z-base: 0;
+  --z-surface: 10;
+  --z-panel: 20;
+  --z-overlay: 30;
+  --z-toast: 40;
+}
+
+/* ---- Shadow scale ---- */
+:root {
+  --shadow-surface: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-panel: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-overlay: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-toast: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+html.dark {
+  --shadow-surface: 0 1px 3px rgba(0,0,0,0.30);
+  --shadow-panel: 0 4px 12px rgba(0,0,0,0.40);
+  --shadow-overlay: 0 8px 30px rgba(0,0,0,0.50);
+  --shadow-toast: 0 4px 16px rgba(0,0,0,0.35);
+}
+
+/* ---- Syntax highlighting token colors ---- */
+:root {
+  --syntax-keyword: #7c3aed;
+  --syntax-string: #059669;
+  --syntax-comment: #a8a29e;
+  --syntax-function: #2563eb;
+  --syntax-number: #d97706;
+  --syntax-operator: #475569;
+  --syntax-property: #0891b2;
+  --syntax-punctuation: #78716c;
+  --syntax-boolean: #dc2626;
+  --syntax-selector: #4f46e5;
+  --syntax-variable: #334155;
+}
+
+html.dark {
+  --syntax-keyword: #c4b5fd;
+  --syntax-string: #6ee7b7;
+  --syntax-comment: #78716c;
+  --syntax-function: #93c5fd;
+  --syntax-number: #fcd34d;
+  --syntax-operator: #94a3b8;
+  --syntax-property: #67e8f9;
+  --syntax-punctuation: #a8a29e;
+  --syntax-boolean: #fca5a5;
+  --syntax-selector: #a5b4fc;
+  --syntax-variable: #e2e8f0;
+}
+
+/* ---- Animations ---- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes messageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* ---- Scrollbar ---- */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -616,4 +727,50 @@ html.dark {
   --empty-title: #e2e8f0;
   --empty-subtitle: #64748b;
   --loading-color: #94a3b8;
+
+  --toast-success-bg: rgba(6, 78, 59, 0.92);
+  --toast-success-border: #047857;
+  --toast-success-text: #a7f3d0;
+  --toast-error-bg: rgba(127, 29, 29, 0.92);
+  --toast-error-border: #991b1b;
+  --toast-error-text: #fecaca;
+  --context-menu-bg: rgba(30, 41, 59, 0.95);
+  --context-menu-border: #334155;
+  --context-menu-text: #e2e8f0;
+  --context-menu-hover-bg: rgba(255, 255, 255, 0.06);
+  --danger-text: #f87171;
+  --danger-hover-bg: rgba(248, 113, 113, 0.12);
+  --inline-edit-bg: rgba(30, 41, 59, 0.9);
+  --inline-edit-border: #475569;
+  --inline-edit-text: #e2e8f0;
 }
+
+/* ---- Sidebar transition ---- */
+.sidebar-transition {
+  transition: width var(--duration-normal) var(--ease-spring);
+}
+
+.sidebar-text-fade {
+  transition: opacity 100ms var(--ease-in);
+}
+
+/* ---- Message grouping ---- */
+.message-group .message-bubble {
+  margin-top: 8px;
+}
+
+.message-group .message-bubble:first-child {
+  margin-top: 20px;
+}
+
+/* ---- Skeleton loader ---- */
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-from, #e7e5e4) 25%, var(--skeleton-to, #d6d3d1) 50%, var(--skeleton-from, #e7e5e4) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+:root { --skeleton-from: #e7e5e4; --skeleton-to: #d6d3d1; }
+
+html.dark { --skeleton-from: #334155; --skeleton-to: #475569; }
