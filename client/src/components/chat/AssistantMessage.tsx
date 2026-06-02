@@ -37,16 +37,9 @@ export function AssistantMessage({ event, compact }: AssistantMessageProps) {
 
   return (
     <div className="flex justify-start">
-      <div className="max-w-[85%] min-w-0 group relative">
+      <div className="group relative">
         <CopyButton text={extractText(event.blocks)} />
-        <div
-          className="rounded-2xl rounded-bl-md px-4 py-3 space-y-3 shadow-md border"
-          style={{
-            backgroundColor: 'var(--bubble-asst-bg)',
-            borderColor: 'var(--bubble-asst-border)',
-            boxShadow: `0 4px 6px -1px var(--bubble-asst-shadow)`,
-          }}
-        >
+        <div className="space-y-3">
           {visibleBlocks.map((block, i) => (
             <BlockRenderer key={i} block={block} index={i} />
           ))}

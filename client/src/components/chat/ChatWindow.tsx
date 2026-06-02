@@ -108,11 +108,14 @@ export function ChatWindow({ projectId, sessionId }: ChatWindowProps) {
         </div>
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto px-4 py-6 space-y-4">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className={`flex ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}>
-                <div className="skeleton h-16 rounded-2xl" style={{ width: `${40 + Math.random() * 30}%` }} />
-              </div>
-            ))}
+            {Array.from({ length: 5 }).map((_, i) => {
+              const isUser = i % 2 === 0;
+              return (
+                <div key={i} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`skeleton h-16 ${isUser ? 'rounded-2xl' : ''}`} style={{ width: `${40 + Math.random() * 30}%` }} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
