@@ -44,17 +44,18 @@ export function AssistantMessage({ event, compact }: AssistantMessageProps) {
             <BlockRenderer key={i} block={block} index={i} />
           ))}
         </div>
-        {!compact && (
-          <div className="flex items-center gap-2 mt-1 ml-2 text-xs text-stone-400/60 dark:text-stone-500/60">
-            {event.timestamp && <span>{formatDate(event.timestamp)}</span>}
-            {event.model && <span className="opacity-60">{event.model}</span>}
-            {event.usage && (
-              <span className="opacity-60">
-                {event.usage.input_tokens}+{event.usage.output_tokens} tokens
-              </span>
-            )}
-          </div>
-        )}
+        <div
+          className="flex items-center gap-2 mt-1 ml-2 text-xs"
+          style={{ color: 'var(--system-text)' }}
+        >
+          {!compact && event.timestamp && <span>{formatDate(event.timestamp)}</span>}
+          {!compact && event.model && <span>{event.model}</span>}
+          {event.usage && (
+            <span>
+              {event.usage.input_tokens}+{event.usage.output_tokens} tokens
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
