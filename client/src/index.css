@@ -13,6 +13,8 @@
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
+@import 'katex/dist/katex.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -774,3 +776,25 @@ html.dark {
 :root { --skeleton-from: #e7e5e4; --skeleton-to: #d6d3d1; }
 
 html.dark { --skeleton-from: #334155; --skeleton-to: #475569; }
+
+/* ---- KaTeX overrides ---- */
+.katex {
+  color: inherit;
+  font-size: 1em;
+}
+
+.katex .mathnormal {
+  color: inherit;
+}
+
+html.dark .katex {
+  color: #e2e8f0;
+}
+
+html.dark .katex .mathnormal {
+  color: #e2e8f0;
+}
+
+html.dark .katex-display {
+  color: #e2e8f0;
+}
