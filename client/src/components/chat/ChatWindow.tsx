@@ -53,6 +53,7 @@ export function ChatWindow({ projectId, sessionId }: ChatWindowProps) {
     let msgCount = 0;
     let firstTs: string | null = null;
     let lastTs: string | null = null;
+    let totalTokens = 0;
     for (const e of events) {
       if (e.type === 'user' || e.type === 'assistant') msgCount++;
       if (e.model) models.add(e.model);
@@ -60,8 +61,11 @@ export function ChatWindow({ projectId, sessionId }: ChatWindowProps) {
         if (!firstTs || e.timestamp < firstTs) firstTs = e.timestamp;
         if (!lastTs || e.timestamp > lastTs) lastTs = e.timestamp;
       }
+      if (e.usage) {
+        totalTokens += e.usage.input_tokens + e.usage.output_tokens;
+      }
     }
-    return { msgCount, models: Array.from(models), firstTs, lastTs };
+    return { msgCount, models: Array.from(models), firstTs, lastTs, totalTokens };
   }, [events]);
 
   // Build message groups for stagger + grouping
@@ -144,6 +148,11 @@ export function ChatWindow({ projectId, sessionId }: ChatWindowProps) {
       >
         <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--header-text)' }}>
           <span className="font-medium" style={{ color: 'var(--header-text-strong)' }}>{stats.msgCount} messages</span>
+          {stats.totalTokens > 0 && (
+            <span className="px-2 py-0.5 rounded-full text-xs font-medium" style={{ backgroundColor: 'var(--accent-light)', color: 'var(--accent)' }}>
+              {stats.totalTokens.toLocaleString()} tokens
+            </span>
+          )}
           {stats.models.length > 0 && (
             <span className="px-2 py-0.5 rounded-full text-xs" style={{ backgroundColor: 'var(--header-pill-bg)', color: 'var(--header-pill-text)' }}>
               {stats.models.join(', ')}
