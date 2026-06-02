@@ -9,12 +9,13 @@
     "dev": "concurrently -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
     "build:server": "node scripts/bundle-server.mjs",
-
     "start": "node dist-server/index.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
     "esbuild": "^0.28.0",
-    "postject": "^1.0.0-alpha.6"
+    "postject": "^1.0.0-alpha.6",
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5"
   }
 }

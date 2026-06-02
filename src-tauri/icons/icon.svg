@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1e3a"/>
+      <stop offset="100%" stop-color="#12122a"/>
+    </linearGradient>
+    <!-- Claude warm gradient -->
+    <linearGradient id="claude-warm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="40%" stop-color="#f97316"/>
+      <stop offset="70%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <!-- Claude cool gradient -->
+    <linearGradient id="claude-cool" x1="0" y1="0" x2="1" y2="0.6">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square icon shape -->
+  <rect x="8" y="8" width="240" height="240" rx="44" fill="url(#bg)"/>
+
+  <!-- Abstract chat bubbles behind -->
+  <circle cx="66" cy="68" r="52" fill="#3b82f6" opacity="0.12"/>
+  <circle cx="196" cy="82" r="42" fill="#8b5cf6" opacity="0.10"/>
+  <circle cx="72" cy="174" r="38" fill="#ec4899" opacity="0.08"/>
+  <circle cx="170" cy="170" r="34" fill="#6366f1" opacity="0.09"/>
+
+  <!-- Claude swirl — outer stroke -->
+  <path d="M128,58
+           C146,58 162,70 170,86
+           C178,102 174,122 164,136
+           C154,150 140,158 126,158
+           C112,158 98,150 90,136
+           C82,122 78,104 84,88
+           C90,72 104,60 118,58
+           C132,56 146,62 156,74
+           C166,86 172,102 170,118
+           C168,134 160,148 148,156
+           C136,164 122,166 110,162"
+        stroke="url(#claude-warm)" stroke-width="7" stroke-linecap="round" fill="none"/>
+
+  <!-- Claude swirl — inner stroke -->
+  <path d="M118,76
+           C130,76 140,84 146,94
+           C152,104 150,118 144,128
+           C138,138 128,144 118,144
+           C108,144 100,138 96,128
+           C92,118 94,106 100,98
+           C106,90 116,86 126,88
+           C136,90 144,98 148,108
+           C152,118 150,130 144,138"
+        stroke="url(#claude-cool)" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
+
+  <!-- Center dot -->
+  <circle cx="128" cy="112" r="8" fill="white" opacity="0.9"/>
+</svg>
